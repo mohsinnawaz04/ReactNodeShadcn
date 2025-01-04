@@ -4,6 +4,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import {
   accessTokenGenerator,
   refreshTokenGenerator,
+  payloadGenerator,
+  tokenDecoder,
 } from "../utils/TokenGenerator.js";
 import {
   encryptPassword,
@@ -39,8 +41,10 @@ const login = asyncHandler(async (req, res) => {
   // Save User
   await user.save();
 
+  const userPayload = payloadGenerator(user);
+
   // Send Response Now
-  apiResponse.success(res, "Login Successful", { user }, 201, accessToken);
+  apiResponse.success(res, "Login Successful", userPayload, 201, accessToken);
 });
 
 // Signup Controller
@@ -66,19 +70,84 @@ const signup = asyncHandler(async (req, res) => {
   const hashedPassword = await encryptPassword(password);
 
   // Create new user
-  const newUser = new userModel({
+  const newUser = await userModel.create({
     email,
     password: hashedPassword,
     fName,
     lName,
   });
 
+  // Response Object for Frontend:
+  const response = {
+    fName: newUser.fName,
+    lName: newUser.lName,
+    email: newUser.email,
+    profilePic: newUser.profilePic,
+    role: newUser.role,
+    _id: newUser._id,
+  };
+
+  // Update: No Need of creating Refresh token on signup
   // Set Refresh Token
-  newUser.refreshToken = refreshTokenGenerator(newUser._id);
-  await newUser.save();
+  // newUser.refreshToken = refreshTokenGenerator(newUser._id);
+  // await newUser.save();
+  // Update: No Need of creating Refresh token on signup //
 
   // Send Response Now
-  apiResponse.success(res, "Signup Successful", { user: newUser }, 201);
+  apiResponse.success(res, "Signup Successful", response, 201);
 });
 
-export { login, signup };
+// Show Profile Details
+const profileDetails = asyncHandler(async (req, res) => {
+  apiResponse.success(res, "Profile Fetched Successfully", req.user, 201);
+});
+
+const updateProfileDetails = asyncHandler(async (req, res) => {
+  const { fName, lName } = req.body;
+
+  const updatedUser = await userModel.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: { fName, lName },
+    },
+    {
+      new: true,
+    }
+  );
+
+  apiResponse.success(
+    res,
+    "Profile Details Update Successfully",
+    updatedUser,
+    201
+  );
+});
+
+const updatePassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  const user = await userModel.findById(req.user._id);
+  const oldPasswordHash = user.password;
+
+  const isMatch = await verifyPassword(oldPassword, oldPasswordHash);
+  if (!isMatch) {
+    apiResponse.error(res, "Password is not correct", "ERROR", 201);
+    return;
+  }
+
+  const hash = await encryptPassword(newPassword);
+
+  const updatedUser = await userModel.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: { password: hash },
+    },
+    {
+      new: true,
+    }
+  );
+
+  apiResponse.success(res, "Password Updated Successfully", updatedUser, 201);
+});
+
+export { login, signup, profileDetails, updateProfileDetails, updatePassword };

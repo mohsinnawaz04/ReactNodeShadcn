@@ -12,4 +12,17 @@ const accessTokenGenerator = (userID) => {
   });
 };
 
-export { refreshTokenGenerator, accessTokenGenerator };
+const payloadGenerator = (user) => {
+  return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+};
+
+const tokenDecoder = (token) => {
+  return jwt.verify(token, process.env.JWT_SECRET);
+};
+
+export {
+  refreshTokenGenerator,
+  accessTokenGenerator,
+  payloadGenerator,
+  tokenDecoder,
+};
