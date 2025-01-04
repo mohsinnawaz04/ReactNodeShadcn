@@ -150,4 +150,17 @@ const updatePassword = asyncHandler(async (req, res) => {
   apiResponse.success(res, "Password Updated Successfully", updatedUser, 201);
 });
 
-export { login, signup, profileDetails, updateProfileDetails, updatePassword };
+const deleteUser = asyncHandler(async (req, res) => {
+  await userModel.findByIdAndDelete(req.user._id);
+
+  apiResponse.success(res, "User has been deleted successfully.", "", 201);
+});
+
+export {
+  login,
+  signup,
+  profileDetails,
+  updateProfileDetails,
+  updatePassword,
+  deleteUser,
+};

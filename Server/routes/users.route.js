@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  deleteUser,
   login,
   profileDetails,
   signup,
@@ -14,5 +15,6 @@ router.post("/signup", signup);
 router.get("/profile", authMiddleware, profileDetails);
 router.post("/update-profile", authMiddleware, updateProfileDetails);
 router.post("/update-password", authMiddleware, updatePassword);
+router.get("/delete-user", authMiddleware, deleteUser);
 
 export default router;
