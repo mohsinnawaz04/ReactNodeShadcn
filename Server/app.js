@@ -5,6 +5,9 @@ import mongodbConnection from "./config/mongodb.config.js";
 import dotenv from "dotenv";
 dotenv.config();
 
+// // Multer for form-data using postman:
+// import multer from "multer";
+// const upload = multer(); // For memory storage (default)
 // Importing Routers
 import userRouter from "./routes/users.route.js";
 
@@ -31,6 +34,7 @@ app.use(
 // Middleware for parsing incoming request data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(upload.any()); // Add this for form-data
 app.use(express.static("public"));
 app.use(cookieParser());
 

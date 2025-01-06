@@ -2,6 +2,10 @@ import userModel from "../models/user.model.js";
 import { apiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import {
+  initializeCloudinary,
+  uploadToCloudinary,
+} from "../config/cloudinary.config.js";
+import {
   accessTokenGenerator,
   refreshTokenGenerator,
   payloadGenerator,
@@ -11,6 +15,7 @@ import {
   encryptPassword,
   verifyPassword,
 } from "../utils/bcryptPassword.util.js";
+import { updateProfilePicture } from "../utils/updateProfilePicture.js";
 
 // Login Controller
 const login = asyncHandler(async (req, res) => {
@@ -47,6 +52,8 @@ const login = asyncHandler(async (req, res) => {
   apiResponse.success(res, "Login Successful", userPayload, 201, accessToken);
 });
 
+// Initialize Cloudinary for Profile Picture Upload
+initializeCloudinary();
 // Signup Controller
 const signup = asyncHandler(async (req, res) => {
   const { email, password, fName, lName } = req.body;
@@ -77,6 +84,30 @@ const signup = asyncHandler(async (req, res) => {
     lName,
   });
 
+  // Upload Profile Picture to Cloudinary
+  let profilePicUrl = null;
+  if (req.file) {
+    try {
+      const uploadResult = await uploadToCloudinary(
+        req.file.buffer,
+        "profile_pictures",
+        `${newUser._id}`
+      );
+
+      profilePicUrl = uploadResult;
+    } catch (uploadError) {
+      return apiResponse.error(
+        res,
+        "Error uploading profile picture",
+        null,
+        500
+      );
+    }
+  }
+
+  newUser.profilePic = profilePicUrl;
+  await newUser.save();
+
   // Response Object for Frontend:
   const response = {
     fName: newUser.fName,
@@ -105,10 +136,35 @@ const profileDetails = asyncHandler(async (req, res) => {
 const updateProfileDetails = asyncHandler(async (req, res) => {
   const { fName, lName } = req.body;
 
+  let profilePicUrl = null;
+  try {
+    if (req.file) {
+      try {
+        const uploadResult = await updateProfilePicture(
+          req.file.buffer,
+          "profile_pictures",
+          `${req.user._id}`
+        );
+
+        profilePicUrl = uploadResult;
+      } catch (uploadError) {
+        return apiResponse.error(
+          res,
+          "Error uploading profile picture",
+          null,
+          500
+        );
+      }
+    }
+  } catch (err) {
+    console.log("ERROR UPDATING Image: ", err);
+    throw new Error('Image update failed:", err');
+  }
+
   const updatedUser = await userModel.findByIdAndUpdate(
     req.user._id,
     {
-      $set: { fName, lName },
+      $set: { fName, lName, profilePic: profilePicUrl },
     },
     {
       new: true,

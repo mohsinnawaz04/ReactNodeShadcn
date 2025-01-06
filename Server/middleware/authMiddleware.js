@@ -9,9 +9,11 @@ const authMiddleware = async (req, res, next) => {
     apiResponse.error(res, "Token Not Available", null, 400);
     return;
   }
-  const { userId } = tokenDecoder(token);
+  const { userID } = tokenDecoder(token);
 
-  req.user = await userModel.findOne({ userId }).select("-password");
+  req.user = await userModel.findById(userID).select("-password");
+  console.log("USER AT MIDDLEWARE", req.user);
+
   next();
 };
 
