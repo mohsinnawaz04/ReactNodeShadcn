@@ -133,6 +133,7 @@ const profileDetails = asyncHandler(async (req, res) => {
   apiResponse.success(res, "Profile Fetched Successfully", req.user, 201);
 });
 
+// Upload profile details such as first name, last name & Profile Picture
 const updateProfileDetails = asyncHandler(async (req, res) => {
   const { fName, lName } = req.body;
 
@@ -179,6 +180,7 @@ const updateProfileDetails = asyncHandler(async (req, res) => {
   );
 });
 
+// Update Password
 const updatePassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
 
@@ -206,6 +208,7 @@ const updatePassword = asyncHandler(async (req, res) => {
   apiResponse.success(res, "Password Updated Successfully", updatedUser, 201);
 });
 
+// Delete your profile from Database
 const deleteUser = asyncHandler(async (req, res) => {
   await userModel.findByIdAndDelete(req.user._id);
 
