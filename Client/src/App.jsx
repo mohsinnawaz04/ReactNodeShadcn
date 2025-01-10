@@ -4,15 +4,15 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Home from "./Pages/Home";
-
+import Home from "./Pages/Home.jsx";
+import { Authentication } from "./Components/Authentication/Authentication.jsx";
 
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/cart" element={<Cart />} /> */}
+        <Route path="/auth" element={<Authentication />} />
         {/* <Route path="/auth/login" element={<Login />} /> */}
         {/* <Route path="/auth/signup" element={<Signup />} /> */}
         {/* <Route path="/profile" element={<Profile />}></Route> */}
