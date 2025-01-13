@@ -4,12 +4,21 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CardHeaderTab from "./CardHeaderTab";
+import { useUser } from "@/lib/Context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [index, setIndex] = useState(false);
+  const [userDetails, setUserDetails] = useState([]);
   const [passwordType, setPasswordType] = useState("password");
+  const { currentUser, login } = useUser();
+
+  // React Router to navigate back to homepage if logged in
+  const navigate = useNavigate();
+  // React Router to navigate back to homepage if logged in END
+
   const {
     register,
     handleSubmit,
@@ -18,7 +27,6 @@ const Login = () => {
 
   const eyeIcon = useRef();
   const passwordRef = useRef();
-
   function showHidePassword() {
     setIndex((prev) => !prev);
 
@@ -33,7 +41,16 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
+
+    await login(data);
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+    setUserDetails(currentUser);
+  }, [currentUser]);
   return (
     <TabsContent value="login">
       <Card>

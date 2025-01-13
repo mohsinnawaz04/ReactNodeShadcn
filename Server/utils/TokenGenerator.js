@@ -13,7 +13,10 @@ const accessTokenGenerator = (userID) => {
 };
 
 const payloadGenerator = (user) => {
-  return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+  return jwt.sign(
+    { id: user._id, email: user.email, fName: user.fName, lName: user.lName },
+    process.env.JWT_SECRET
+  );
 };
 
 const tokenDecoder = (token) => {

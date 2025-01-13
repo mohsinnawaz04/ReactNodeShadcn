@@ -2,6 +2,8 @@ import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 import { instance } from "../axios";
 import { storeTokenLS } from "@/utils/storeTokenLS";
+import { useToast } from "@/hooks/use-toast";
+
 const UserContext = createContext();
 
 export const useUser = () => {
@@ -11,9 +13,11 @@ export const useUser = () => {
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const { toast } = useToast();
 
   async function login(userDetails) {
     const { email, password } = userDetails;
+    console.log("EMAIL", email, "Password", password);
 
     // Check for empty fields
     if (email.trim() === "" || password.trim() === "") {
@@ -27,7 +31,8 @@ export function UserProvider({ children }) {
       }); //Ensure Cookies are sent/received
 
       if (data) {
-        const { token } = data;
+        const token = data.data;
+        console.log("TOKEN", token);
 
         if (token) {
           storeTokenLS(token);
@@ -35,25 +40,35 @@ export function UserProvider({ children }) {
         }
       }
     } catch (err) {
-      console.log("Error parsing fields to backend");
-      return;
+      console.log("Error parsing fields to backend", err);
+      console.log("ERROR MESSAGE: ", err.response.data.message);
+      setTimeout(() => {
+        return toast({
+          title: `${err.response.data.message}`,
+        });
+      }, 1000);
     }
   }
 
   async function signup(userDetails) {
-    const { name, email, password } = userDetails;
+    const { fName, lName, email, password } = userDetails;
 
-    if ([name, email, password].some((field) => field.trim() === "")) {
+    if ([fName, lName, email, password].some((field) => field.trim() === "")) {
       console.log("Name, Email or password empty!");
       return;
     }
 
     try {
-      const { data } = await instance.post("/users/signup", userDetails);
+      const { data } = await instance.post("/users/signup", userDetails, {
+        withCredentials: true,
+      }); //Ensure Cookies are sent/received
 
-      if (data) {
-        localStorage.setItem("token", data.token);
-        window.location.href = "/";
+      if (data.success) {
+        console.log(data);
+        await login(userDetails);
+
+        // localStorage.setItem("token", data.token);
+        // window.location.href = "/";
       }
     } catch (err) {
       console.log("ERROR OCCURED WHILE REGISTERING::: ", err);

@@ -4,11 +4,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CardHeaderTab from "./CardHeaderTab";
+import { useUser } from "@/lib/Context/UserContext";
 
 const Signup = () => {
   const [index, setIndex] = useState(false);
+  const [userDetails, setUserDetails] = useState([]);
   const [passwordType, setPasswordType] = useState("password");
   const [cPasswordType, setCPasswordType] = useState("password");
   const {
@@ -16,6 +18,7 @@ const Signup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { currentUser, signup } = useUser();
 
   const eyeIcon = useRef();
   const eyeIcon2 = useRef();
@@ -54,7 +57,12 @@ const Signup = () => {
       console.log("Passwords do not match.");
       return;
     }
-    
+
+    await signup(data);
+
+    useEffect(() => {
+      setUserDetails(currentUser);
+    }, [currentUser]);
   };
 
   return (
