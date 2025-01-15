@@ -47,6 +47,7 @@ const Login = () => {
 
   useEffect(() => {
     if (currentUser) {
+      console.log(currentUser);
       navigate("/");
     }
     setUserDetails(currentUser);

@@ -14,7 +14,13 @@ const accessTokenGenerator = (userID) => {
 
 const payloadGenerator = (user) => {
   return jwt.sign(
-    { id: user._id, email: user.email, fName: user.fName, lName: user.lName },
+    {
+      id: user._id,
+      email: user.email,
+      fName: user.fName,
+      lName: user.lName,
+      profilePic: user.profilePic,
+    },
     process.env.JWT_SECRET
   );
 };
