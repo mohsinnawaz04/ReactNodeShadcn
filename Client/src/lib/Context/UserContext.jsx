@@ -75,6 +75,33 @@ export function UserProvider({ children }) {
     }
   }
 
+  async function updateProfile(userDetails) {
+    const { fName, lName } = userDetails;
+
+    if ([fName, lName].some((field) => field.trim() === "")) {
+      console.log("All Fields are required.");
+      return;
+    }
+
+    try {
+      const { data } = await instance.post(
+        "/users/update-profile",
+        userDetails,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (data) {
+        const token = data.data;
+        storeTokenLS(token);
+        init(token);
+      }
+    } catch (err) {
+      console.log("Error Occured while updating profile details", err);
+    }
+  }
+
   function logout() {
     localStorage.removeItem("token");
     window.location.reload();
@@ -97,7 +124,9 @@ export function UserProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ currentUser: user, login, signup, logout }}>
+    <UserContext.Provider
+      value={{ currentUser: user, login, signup, updateProfile, logout }}
+    >
       {children}
     </UserContext.Provider>
   );

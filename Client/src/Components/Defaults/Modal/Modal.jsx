@@ -10,15 +10,40 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useUser } from "@/lib/Context/UserContext";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
-const Modal = ({ open, onOpenChange }) => {
-  function handleOpenChange() {
-    onOpenChange((prev) => !prev);
-  }
+const Modal = ({ open, setOpen, user }) => {
+  const [fName, setfName] = useState(user?.fName);
+  const [lName, setlName] = useState(user?.lName);
+  // const [email, setEmail] = useState(user?.email);
+  const { updateProfile } = useUser();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+
+    await updateProfile(data);
+
+    setOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (user) {
+      setfName(user.fName);
+      setlName(user.lName);
+    }
+  }, [user]);
+
   return (
     <>
-      <Dialog open={open} onOpenChange={handleOpenChange}>
+      <Dialog open={open}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
@@ -26,23 +51,71 @@ const Modal = ({ open, onOpenChange }) => {
               Make changes to your profile here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
+            {/* First Name */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
+              <Label htmlFor="fName" className="text-right">
+                First Name
               </Label>
-              <Input id="name" value="Pedro Duarte" className="col-span-3" />
+              <Input
+                id="fName"
+                type="text"
+                defaultValue={fName}
+                onChange={(e) => setfName(e.target.value)}
+                className="col-span-3"
+                {...register("fName", {
+                  required: {
+                    value: true,
+                    message: "First Name is required.",
+                  },
+                })}
+              />
+              {errors.fName && (
+                <span className="text-red-500 text-sm italic">
+                  {errors.fName.message}
+                </span>
+              )}
             </div>
+            {/* Last Name */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Username
+              <Label htmlFor="lName" className="text-right">
+                Last Name
               </Label>
-              <Input id="username" value="@peduarte" className="col-span-3" />
+              <Input
+                id="lName"
+                type="text"
+                defaultValue={lName}
+                onChange={(e) => setlName(e.target.value)}
+                className="col-span-3"
+                {...register("lName", {
+                  required: {
+                    value: true,
+                    message: "Last Name is required.",
+                  },
+                })}
+              />
+              {errors.lName && (
+                <span className="text-red-500 text-sm italic">
+                  {errors.lName.message}
+                </span>
+              )}
             </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit">Save changes</Button>
-          </DialogFooter>
+            {/* Email */}
+            {/* <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className="text-right">
+                Email
+              </Label>
+              <Input
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="col-span-3"
+              />
+            </div> */}
+            <DialogFooter>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </>

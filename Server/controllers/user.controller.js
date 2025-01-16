@@ -135,6 +135,8 @@ const profileDetails = asyncHandler(async (req, res) => {
 
 // Upload profile details such as first name, last name & Profile Picture
 const updateProfileDetails = asyncHandler(async (req, res) => {
+  console.log("User detials at updateProfile Controlller ==>", req.user);
+
   const { fName, lName } = req.body;
 
   let profilePicUrl = null;
@@ -162,22 +164,48 @@ const updateProfileDetails = asyncHandler(async (req, res) => {
     throw new Error('Image update failed:", err');
   }
 
-  const updatedUser = await userModel.findByIdAndUpdate(
-    req.user._id,
-    {
-      $set: { fName, lName, profilePic: profilePicUrl },
-    },
-    {
-      new: true,
-    }
-  );
+  // Prepare update object dynamically
+  const updateFields = { fName, lName };
 
-  apiResponse.success(
-    res,
-    "Profile Details Update Successfully",
-    updatedUser,
-    201
-  );
+  // Only add profilePicUrl to the update if it's provided
+  if (profilePicUrl) {
+    updateFields.profilePic = profilePicUrl;
+  }
+
+  console.log("USER AT UPDATE PROFLE CONTROLLER", req.user);
+
+  const updatedUser = await userModel
+    .findByIdAndUpdate(
+      req.user._id,
+      {
+        $set: updateFields,
+      },
+      {
+        new: true,
+      }
+    )
+    .select("-password -refreshToken");
+
+  console.log("UPDATED USER", updatedUser);
+
+  const userPayload = payloadGenerator(updatedUser);
+
+  if (req.token === undefined || req.token === null || req.token === "null") {
+    apiResponse.success(
+      res,
+      "Profile Details Update Successfully",
+      userPayload,
+      201
+    );
+  } else {
+    apiResponse.success(
+      res,
+      "Profile Details Update Successfully",
+      userPayload,
+      201,
+      req.token // Include req.token only if it's defined
+    );
+  }
 });
 
 // Update Password

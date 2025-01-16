@@ -21,7 +21,8 @@ const payloadGenerator = (user) => {
       lName: user.lName,
       profilePic: user.profilePic,
     },
-    process.env.JWT_SECRET
+    process.env.JWT_SECRET,
+    { expiresIn: "15m" }
   );
 };
 
