@@ -76,12 +76,17 @@ export function UserProvider({ children }) {
   }
 
   async function updateProfile(userDetails) {
+    console.log(userDetails);
+
     const { fName, lName } = userDetails;
 
     if ([fName, lName].some((field) => field.trim() === "")) {
       console.log("All Fields are required.");
       return;
     }
+    const headers = userDetails.profilePic
+      ? { "Content-Type": "multipart/form-data" }
+      : {};
 
     try {
       const { data } = await instance.post(
@@ -89,10 +94,13 @@ export function UserProvider({ children }) {
         userDetails,
         {
           withCredentials: true,
+          headers: headers, // Conditionally add headers
         }
       );
 
       if (data) {
+        console.log("UPDATE PROFILE DATA AT USER CONTEXT ==>", data);
+
         const token = data.data;
         storeTokenLS(token);
         init(token);
@@ -104,7 +112,7 @@ export function UserProvider({ children }) {
 
   function logout() {
     localStorage.removeItem("token");
-    window.location.reload();
+    window.location.href = "/";
   }
 
   function init(token) {

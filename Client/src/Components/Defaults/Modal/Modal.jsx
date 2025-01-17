@@ -6,18 +6,25 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useUser } from "@/lib/Context/UserContext";
+import { Loader2, Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import InputComponent from "../Input/InputComponent";
 
-const Modal = ({ open, setOpen, user }) => {
+const Modal = ({
+  open,
+  setOpen,
+  user,
+  handlePictureModalOpen,
+  croppedFile,
+}) => {
+  // const [email, setEmail] = useState(user?.email);
   const [fName, setfName] = useState(user?.fName);
   const [lName, setlName] = useState(user?.lName);
-  // const [email, setEmail] = useState(user?.email);
+  const [isLoading, setIsLoading] = useState(false);
+  const [imgURL, setImgURL] = useState(null);
   const { updateProfile } = useUser();
 
   const {
@@ -27,11 +34,17 @@ const Modal = ({ open, setOpen, user }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    setIsLoading(true);
+    if (croppedFile) {
+      data.profilePic = croppedFile;
+    }
+    setTimeout(async () => {
+      await updateProfile(data);
+      console.log("data", data);
 
-    await updateProfile(data);
-
-    setOpen((prev) => !prev);
+      setOpen((prev) => !prev);
+      setIsLoading(false);
+    }, 1500);
   };
 
   useEffect(() => {
@@ -39,86 +52,79 @@ const Modal = ({ open, setOpen, user }) => {
       setfName(user.fName);
       setlName(user.lName);
     }
-  }, [user]);
+    if (croppedFile) {
+      const fileURL = URL.createObjectURL(croppedFile);
+      setImgURL(fileURL);
+
+      // Cleanup the URL when the component unmounts or the file changes
+      return () => URL.revokeObjectURL(fileURL);
+    }
+  }, [user, croppedFile]);
 
   return (
-    <>
-      <Dialog open={open}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
-            {/* First Name */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="fName" className="text-right">
-                First Name
-              </Label>
-              <Input
-                id="fName"
-                type="text"
-                defaultValue={fName}
-                onChange={(e) => setfName(e.target.value)}
-                className="col-span-3"
-                {...register("fName", {
-                  required: {
-                    value: true,
-                    message: "First Name is required.",
-                  },
-                })}
-              />
-              {errors.fName && (
-                <span className="text-red-500 text-sm italic">
-                  {errors.fName.message}
-                </span>
-              )}
-            </div>
-            {/* Last Name */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="lName" className="text-right">
-                Last Name
-              </Label>
-              <Input
-                id="lName"
-                type="text"
-                defaultValue={lName}
-                onChange={(e) => setlName(e.target.value)}
-                className="col-span-3"
-                {...register("lName", {
-                  required: {
-                    value: true,
-                    message: "Last Name is required.",
-                  },
-                })}
-              />
-              {errors.lName && (
-                <span className="text-red-500 text-sm italic">
-                  {errors.lName.message}
-                </span>
-              )}
-            </div>
-            {/* Email */}
-            {/* <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
-                Email
-              </Label>
-              <Input
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="col-span-3"
-              />
-            </div> */}
-            <DialogFooter>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
+          {/* Profile Image */}
+          <div className="form-control w-fit mx-auto relative">
+            <img
+              src={
+                imgURL
+                  ? imgURL
+                  : user?.profilePic
+                  ? user.profilePic
+                  : "https://res.cloudinary.com/dux6spy1i/image/upload/v1734650249/profile_images/default.png"
+              }
+              className="w-20 h-20 rounded-full object-cover mx-auto"
+              alt="Profile Image"
+            />
+            <Button
+              variant="ghost"
+              type="button"
+              onClick={handlePictureModalOpen}
+              className="absolute w-full h-full top-0 right-0 rounded-full opacity-0 hover:opacity-50"
+            >
+              <Pencil />
+            </Button>
+          </div>
+
+          {/* First Name */}
+          <InputComponent
+            id={"fName"}
+            label={"First Name"}
+            defaultValue={fName}
+            onChange={(e) => setfName(e.target.value)}
+            register={register}
+            errors={errors}
+          />
+          {/* Last Name */}
+          <InputComponent
+            id={"lName"}
+            label={"Last Name"}
+            defaultValue={lName}
+            onChange={(e) => setlName(e.target.value)}
+            register={register}
+            errors={errors}
+          />
+          <DialogFooter>
+            {!isLoading ? (
               <Button type="submit">Save changes</Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-    </>
+            ) : (
+              <Button disabled>
+                <Loader2 className="animate-spin" />
+                Submitting...
+              </Button>
+            )}
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 };
 

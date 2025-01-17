@@ -20,6 +20,11 @@ const uploadToCloudinary = async (fileBuffer, folder, publicId) => {
         folder,
         public_id: publicId,
         resource_type: "image",
+        transformation: [
+          { width: 200, height: 200 },
+          { radius: "max" },
+          { fetch_format: "auto" },
+        ],
       },
       (error, result) => {
         if (error) return reject(error);

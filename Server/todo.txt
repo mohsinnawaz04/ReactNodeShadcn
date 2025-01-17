@@ -1,0 +1,7 @@
+1. When Uploading profile picture on backend :
+. Profile Pics of each user will go in a folder named Profile Images in Cloudinary
+. Inside that folder you should create another folder with id of user as folder name
+. Inside that folder you will upload profile pictures of user.
+. Now, if user has uploaded one profile picture but then again edits and upload another pic, then previous one shouldn't be deleted. Instead, you should only update the profilePic string in users' db.
+. This way, if user decided that he want to choose or see previous profile images like fb google etc, then he can. Also give him the option to select previous profile images while updating the profile pic if there are any profile pics.
+ 

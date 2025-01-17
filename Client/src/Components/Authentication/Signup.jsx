@@ -4,15 +4,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CardHeaderTab from "./CardHeaderTab";
 import { useUser } from "@/lib/Context/UserContext";
+import { Loader2 } from "lucide-react";
 
 const Signup = () => {
-  const [index, setIndex] = useState(false);
+  const [passwordVisibility, setPasswordVisibility] = useState({
+    password: false,
+    cPassword: false,
+  });
   const [userDetails, setUserDetails] = useState([]);
-  const [passwordType, setPasswordType] = useState("password");
-  const [cPasswordType, setCPasswordType] = useState("password");
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -20,24 +23,14 @@ const Signup = () => {
   } = useForm();
   const { currentUser, signup } = useUser();
 
-  const eyeIcon = useRef();
-  const eyeIcon2 = useRef();
+  const togglePasswordVisibility = (field) => {
+    console.log(passwordVisibility);
 
-  function showHidePassword(e) {
-    setIndex((prev) => !prev);
-
-    if (index) {
-      e.target.src = "eye-solid.svg";
-      e.target.id === "eye-1"
-        ? setPasswordType("password")
-        : setCPasswordType("password");
-    } else {
-      e.target.src = "eye-slash-solid.svg";
-      e.target.id === "eye-1"
-        ? setPasswordType("text")
-        : setCPasswordType("text");
-    }
-  }
+    setPasswordVisibility((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -58,7 +51,11 @@ const Signup = () => {
       return;
     }
 
-    await signup(data);
+    setIsLoading(true);
+    setTimeout(async () => {
+      await signup(data);
+      setIsLoading(false);
+    }, 1500);
 
     useEffect(() => {
       setUserDetails(currentUser);
@@ -90,7 +87,7 @@ const Signup = () => {
               <Label htmlFor="lName">Last Name</Label>
               <Input
                 id="lName"
-                placeholder="Name"
+                placeholder="Last Name"
                 {...register("lName", {
                   required: { value: true, message: "Last Name is required." },
                 })}
@@ -125,7 +122,7 @@ const Signup = () => {
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
-                type={passwordType}
+                type={passwordVisibility.password ? "text" : "password"}
                 placeholder="********"
                 {...register("password", {
                   required: { value: true, message: "Password is required." },
@@ -136,8 +133,7 @@ const Signup = () => {
                 })}
               />
               <img
-                onClick={showHidePassword}
-                ref={eyeIcon}
+                onClick={() => togglePasswordVisibility("password")}
                 id="eye-1"
                 src="eye-solid.svg"
                 alt="EYE LOGO"
@@ -151,7 +147,7 @@ const Signup = () => {
               <Label htmlFor="cPassword">Password</Label>
               <Input
                 id="cPassword"
-                type={cPasswordType}
+                type={passwordVisibility.cPassword ? "text" : "password"}
                 placeholder="********"
                 {...register("cPassword", {
                   required: {
@@ -161,8 +157,7 @@ const Signup = () => {
                 })}
               />
               <img
-                onClick={showHidePassword}
-                ref={eyeIcon2}
+                onClick={() => togglePasswordVisibility("cPassword")}
                 id="eye-2"
                 src="eye-solid.svg"
                 alt="EYE LOGO"
@@ -173,7 +168,14 @@ const Signup = () => {
               </span>
             </div>
 
-            <Button className="mt-4 w-full">Signup</Button>
+            {!isLoading ? (
+              <Button className="mt-4 w-full">Signup</Button>
+            ) : (
+              <Button className="mt-4 w-full" disabled>
+                <Loader2 className="animate-spin" />
+                Please wait...
+              </Button>
+            )}
           </form>
         </CardContent>
       </Card>

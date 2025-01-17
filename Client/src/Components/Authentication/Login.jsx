@@ -8,11 +8,13 @@ import { useEffect, useRef, useState } from "react";
 import CardHeaderTab from "./CardHeaderTab";
 import { useUser } from "@/lib/Context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const [index, setIndex] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
   const [passwordType, setPasswordType] = useState("password");
+  const [isLoading, setIsLoading] = useState(false);
   const { currentUser, login } = useUser();
 
   // React Router to navigate back to homepage if logged in
@@ -40,9 +42,11 @@ const Login = () => {
   }
 
   const onSubmit = async (data) => {
-    console.log(data);
-
-    await login(data);
+    setIsLoading(true);
+    setTimeout(async () => {
+      await login(data);
+      setIsLoading(false);
+    }, 1500);
   };
 
   useEffect(() => {
@@ -106,13 +110,19 @@ const Login = () => {
                 alt="EYE ICON"
                 className="size-4 absolute bottom-[0.6rem] right-5 hover:cursor-pointer z-40"
               />
-
               <span className="text-red-500 text-sm italic">
                 {errors.password && errors.password.message}
               </span>
               {/* Password Input End */}
             </div>
-            <Button className="mt-4 w-full">Login</Button>
+            {!isLoading ? (
+              <Button className="mt-4 w-full">Login</Button>
+            ) : (
+              <Button className="mt-4 w-full" disabled>
+                <Loader2 className="animate-spin" />
+                Please wait...
+              </Button>
+            )}
           </form>
         </CardContent>
       </Card>

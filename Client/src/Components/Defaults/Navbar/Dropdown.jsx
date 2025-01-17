@@ -38,7 +38,7 @@ const Dropdown = () => {
       <DropdownMenu>
         <DropdownMenuTrigger
           className="group inline-flex w-12 h-12 rounded-full overflow-hidden items-center justify-center bg-white text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900  focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50 selection:bg-none outline-none"
-          prefetch={false}
+          prefetch={"false"}
         >
           <img
             src={
