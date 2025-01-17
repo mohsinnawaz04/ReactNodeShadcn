@@ -16,6 +16,7 @@ import {
   verifyPassword,
 } from "../utils/bcryptPassword.util.js";
 import { updateProfilePicture } from "../utils/updateProfilePicture.js";
+import { formatTimestampForWhatsApp } from "../utils/formatTime.js";
 
 // Login Controller
 const login = asyncHandler(async (req, res) => {
@@ -143,10 +144,19 @@ const updateProfileDetails = asyncHandler(async (req, res) => {
   try {
     if (req.file) {
       try {
+        const extname = req.file.originalname.split(".").pop(); // Extracts the file extension (jpg, png, etc.)
+        const timestamp = Date.now();
+        const decoded_time = formatTimestampForWhatsApp(timestamp);
+        console.log(decoded_time);
+
+        const fileName = `${
+          req.file.originalname.split(".")[0]
+        }_${decoded_time}.${extname}`;
+
         const uploadResult = await updateProfilePicture(
           req.file.buffer,
-          "profile_pictures",
-          `${req.user._id}`
+          `profile_pictures/${req.user._id}`,
+          fileName
         );
 
         profilePicUrl = uploadResult;
