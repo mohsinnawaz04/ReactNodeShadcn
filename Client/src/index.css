@@ -61,7 +61,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-foreground text-background;
   }
 }
 
@@ -77,4 +77,13 @@
 
 #profile-picture:hover #edit-btn {
   border: 1px solid red;
+}
+
+.img-wrapper img {
+  max-width: 100%;
+  height: auto;
+}
+
+.img-wrapper {
+  overflow: hidden;
 }

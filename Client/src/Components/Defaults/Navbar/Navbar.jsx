@@ -1,23 +1,28 @@
-import { Link } from "react-router-dom";
-import Sidebar from "./Sidebar.jsx";
-import MountainIcon from "./MountainIcon.jsx";
 import Nav from "./nav.jsx";
 import { Separator } from "@/Components/ui/separator.jsx";
+import MiniHeader from "./MiniHeader.jsx";
+import { Input } from "@/Components/ui/input.jsx";
+import Dropdown from "./Dropdown.jsx";
 
 export default function Component() {
   return (
     <>
-      <header className="flex h-20 w-full shrink-0 items-center px-10 md:px-6">
-        <Sidebar />
-        {/* Company Logo */}
-        <Link to="/" className="mr-6 hidden lg:flex" prefetch={false}>
-          <MountainIcon className="h-6 w-6" />
-          <span className="ms-2">Acme Inc</span>
-        </Link>
-        {/* Nav Menu */}
+      {/* Mini Header */}
+      <MiniHeader />
+      <Separator className="opacity-20" />
+      {/* Main Header */}
+      <header className="container mx-auto flex justify-between items-center py-3 flex-1">
+        <div className="search-bar flex-grow-[1]">
+          <Input
+            type="search"
+            className="max-w-max border-none bg-white bg-opacity-15 placeholder:text-white placeholder:opacity-70 focus:ring-0 focus-visible:ring-0 focus-visible:shadow-none"
+            placeholder="Search..."
+          />
+        </div>
         <Nav />
+        <Dropdown />
       </header>
-      <Separator className="mb-4" />
+      <Separator className="mb-4 opacity-20" />
     </>
   );
 }
