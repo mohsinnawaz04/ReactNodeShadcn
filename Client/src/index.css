@@ -91,6 +91,10 @@
   justify-content: center;
 }
 
+.line-through {
+  opacity: 0.5;
+}
+
 .swiper-pagination {
   position: absolute;
   bottom: 0;

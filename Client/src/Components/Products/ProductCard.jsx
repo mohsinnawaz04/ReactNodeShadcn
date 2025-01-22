@@ -2,9 +2,9 @@ import ButtonComponent from "../Defaults/Button/ButtonComponent";
 
 const ProductCard = ({ isSale = false }) => {
   return (
-    <div className="product-card w-fit py-10 text-center relative">
+    <div className="product-card w-fit py-5 text-center relative">
       {isSale && (
-        <div className="sale-box bg-[#5DBDAC] rounded-full size-10 flex justify-center items-center absolute top-0 translate-y-8 right-0 translate-x-3">
+        <div className="sale-box bg-[#5DBDAC] rounded-full size-10 flex justify-center items-center absolute top-0 translate-y-2 right-0 translate-x-3">
           <span className="text-white text-xs">Sale!</span>
         </div>
       )}
