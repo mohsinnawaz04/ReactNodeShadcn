@@ -25,7 +25,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto hidden">
+      <section className="container mx-auto hidden mt-20">
         <div className="product-catalogue mt-20">
           <h2 className="mt-10 mb-0 text-4xl text-center font-semibold">
             New Arrivals
@@ -38,13 +38,13 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto popular-categories">
+      <section className="container mx-auto hidden mt-20 popular-categories bg-zinc-800 bg-opacity-60 ps-10 rounded-2xl">
         <div className="grid grid-cols-12">
-          <div className="text left col-span-8">
+          <div className="text left col-span-8 py-10">
             <div className="grid grid-cols-12">
-              <div className="col-span-4">
+              <div className="col-span-4 flex flex-col items-start justify-between">
                 <h2 className="text-4xl font-bold mr-6">Popular Categories</h2>
-                <p className="my-5">
+                <p className="my-5 lg:pe-24">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
                   elit tellus luctus ullamcorper mattis, pulvinar dapibus leo.
                 </p>
@@ -56,20 +56,24 @@ const HeroComponet = () => {
               <div className="col-span-8">
                 <div className="grid grid-cols-2 gap-5">
                   {/* Category Card */}
-                  {Array(10).fill(null).map(())}
+                  {Array(10)
+                    .fill(null)
+                    .map((_, idx) => (
+                      <CategoryCard key={idx} />
+                    ))}
                   {/* Category Card */}
                 </div>
               </div>
             </div>
           </div>
-          <div className="poster right col-span-4 relative">
-            <div className="poster-img img-wrapper absolute top-0 left-0 -z-10 h-full">
+          <div className="poster right col-span-4 relative bg-[#395C56] pe-10 rounded-r-2xl">
+            <div className="poster-img img-wrapper absolute top-0 left-0 z-0 h-full">
               <img
                 src="images/popular-categories/poster.png"
                 alt="Poster Image"
               />
             </div>
-            <div>
+            <div className="h-full flex flex-col pb-10 px-10 justify-end items-start z-20 relative">
               <h4 className="sub-heading uppercase text-lg tracking-wide font-semibold mt-auto">
                 Step into savings
               </h4>
@@ -84,8 +88,55 @@ const HeroComponet = () => {
           </div>
         </div>
       </section>
+
+      <section className="container mx-auto mt-20 suggestion">
+        <div className="grid grid-cols-2">
+          <div className="col">
+            <div className="img-wrapper rounded-2xl overflow-hidden">
+              <img
+                src="images/suggestions/keyboard-button.png"
+                className="keyboard-img"
+                alt="Keyboard Button"
+              />
+            </div>
+          </div>
+          <div className="col flex flex-col justify-between items-start">
+            <div className="text-card space-y-10 sm:px-10 lg:px-20 lg:py-10">
+              <h2 className="text-4xl font-semibold">
+                Didn't find anything interesting?
+              </h2>
+              <p className="text-lg">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat
+              </p>
+              <ButtonComponent classes={"uppercase px-8"} text="Get Promo" />
+            </div>
+            <div className="images-card flex gap-5">
+              <div className="img-wrapper">
+                <img
+                  src="images/suggestions/carousel-img-1.png"
+                  alt="Product Card Image"
+                />
+              </div>
+              <div className="img-wrapper">
+                <img
+                  src="images/suggestions/carousel-img-2.png"
+                  alt="Product Card Image"
+                />
+              </div>
+              <div className="img-wrapper">
+                <img
+                  src="images/suggestions/carousel-img-3.png"
+                  alt="Product Card Image"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };
-
 export default HeroComponet;
