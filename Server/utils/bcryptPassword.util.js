@@ -5,7 +5,7 @@ const verifyPassword = async (password, hash) => {
     return result;
   } catch (err) {
     console.log("ERROR VERIFYING PASSWORD", err);
-    throw new Error("Error verifying password", err);
+    throw new Error("Error verifying password");
   }
 };
 
@@ -15,7 +15,7 @@ const encryptPassword = async (password) => {
     return result;
   } catch (err) {
     console.log("ERROR ENCRYPTING PASSWORD", err);
-    throw new Error("Error encrypting password", err);
+    throw new Error("Error encrypting password");
   }
 };
 

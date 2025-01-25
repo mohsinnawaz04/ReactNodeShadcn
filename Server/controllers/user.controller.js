@@ -35,7 +35,7 @@ const login = asyncHandler(async (req, res) => {
   // Check if password is correct
   const isMatch = await verifyPassword(password, user.password);
   if (!isMatch) {
-    apiResponse.error(res, "Invalid credentials", null, 400);
+    return apiResponse.error(res, "Invalid credentials", null, 401);
   }
 
   // Set Refresh Token

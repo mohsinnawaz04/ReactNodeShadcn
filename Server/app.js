@@ -5,8 +5,6 @@ import mongodbConnection from "./config/mongodb.config.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-
-
 // // Multer for form-data using postman:
 // import multer from "multer";
 // const upload = multer(); // For memory storage (default)
