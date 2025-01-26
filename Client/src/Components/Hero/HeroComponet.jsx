@@ -3,8 +3,10 @@ import ProductCard from "../Products/ProductCard";
 import HeroAside from "./HeroAside";
 import HeroMain from "./HeroMain";
 import ButtonComponent from "../Defaults/Button/ButtonComponent";
-import { ArrowRight, MoveRight } from "lucide-react";
 import CategoryCard from "./CategoryCard";
+import TimeButton from "../Defaults/Button/TimeButton";
+import PortfolioCard from "../Defaults/Cards/PortfolioCard";
+import TweetCarousel from "../Defaults/Carousels/TweetCarousel";
 
 const HeroComponet = () => {
   const [numberOfProducts, setNumberOfProducts] = useState([]);
@@ -89,7 +91,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto mt-20 suggestion">
+      <section className="container mx-auto hidden mt-20 suggestion">
         <div className="grid grid-cols-2">
           <div className="col">
             <div className="img-wrapper rounded-2xl overflow-hidden">
@@ -136,6 +138,72 @@ const HeroComponet = () => {
           </div>
         </div>
       </section>
+
+      <section className="container mx-auto hidden mt-20 limited-time bg-zinc-800 px-16 py-5 rounded-2xl">
+        <div className="grid grid-cols-12 gap-20">
+          <div className="col col-span-4 py-10">
+            <h4 className="uppercase">Limited Time Offer</h4>
+            <h2 className="text-4xl font-semibold mt-2 mb-7">
+              Grab Your Favorites at Our Fashion Sale!
+            </h2>
+            <div className="row grid grid-cols-12 gap-5">
+              <div className="col col-span-3">
+                <TimeButton time={44} timeUnit={"Days"} />
+              </div>
+              <div className="col col-span-3">
+                <TimeButton time={18} timeUnit={"Hours"} />
+              </div>
+              <div className="col col-span-3">
+                <TimeButton time={49} timeUnit={"Minutes"} />
+              </div>
+              <div className="col col-span-3">
+                <TimeButton time={35} timeUnit={"Seconds"} />
+              </div>
+            </div>
+            <ButtonComponent
+              classes={"uppercase mt-10 px-7 py-5"}
+              text="Grab Your Favorites"
+            />
+          </div>
+          <div className="col col-span-8">
+            <div className="row flex justify-between">
+              {Array(3)
+                .fill(null)
+                .map((_, idx) => (
+                  <ProductCard key={idx} isSale={idx === 0} />
+                ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="container mx-auto hidden mt-20 portfolio">
+        <div className="grid grid-cols-12 gap-10">
+          <div className="col col-span-8">
+            <div className="grid grid-cols-12 gap-5 relative">
+              <div className="instagram-card absolute flex flex-col justify-between items-center bg-[#171717] max-w-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-y-3 p-10 px-14 rounded-2xl">
+                <h4 className="uppercase text-[#5DBDAC] font-semibold">
+                  Instagram
+                </h4>
+                <h3 className="font-semibold">@insta_username</h3>
+                <p className="text-center opacity-70 font-light">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+                  elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus
+                  leo.
+                </p>
+              </div>
+              {Array(8)
+                .fill(null)
+                .map((_, idx) => (
+                  <PortfolioCard key={idx} />
+                ))}
+            </div>
+          </div>
+          <div className="col col-span-4 tweet-carousel rounded-2xl bg-[#5DBDAC] bg-opacity-20">
+            <TweetCarousel />
+          </div>
+        </div>
+      </div>
     </>
   );
 };

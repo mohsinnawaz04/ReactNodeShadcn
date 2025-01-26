@@ -123,3 +123,11 @@
   transform: translateY(-100%);
   z-index: 50;
 }
+
+/* Tweet Carousel */
+.tweet-carousel .swiper-pagination-bullet {
+  background: #5dbdac !important;
+}
+.tweet-carousel .swiper-pagination-bullet-active {
+  background: #5dbdac !important;
+}
