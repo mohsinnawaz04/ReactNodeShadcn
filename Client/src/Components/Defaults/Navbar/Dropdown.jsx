@@ -49,7 +49,7 @@ const Dropdown = () => {
             className="object-cover object-center h-full"
           />
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="min-w-[160px] mt-2">
           <DropdownMenuLabel>
             {!currentUser ? (
               "My Account"

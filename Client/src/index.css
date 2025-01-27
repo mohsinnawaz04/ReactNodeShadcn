@@ -131,3 +131,7 @@
 .tweet-carousel .swiper-pagination-bullet-active {
   background: #5dbdac !important;
 }
+
+.iphone-wrapper {
+  margin-top: auto !important;
+}

@@ -25,13 +25,13 @@ const HeroComponet = () => {
   return (
     <>
       <section className="container mx-auto mt-20">
-        <div className="row flex gap-5">
+        <div className="row flex gap-5 flex-col xl:flex-row">
           <HeroMain />
           <HeroAside />
         </div>
       </section>
 
-      <section className="container mx-auto mt-20">
+      <section className="container mx-auto hidden mt-20">
         <div className="product-catalogue mt-20">
           <h2 className="mt-10 mb-0 text-4xl text-center font-semibold">
             New Arrivals
@@ -44,7 +44,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto mt-20 popular-categories bg-zinc-800 bg-opacity-60 ps-10 rounded-2xl">
+      <section className="container mx-auto hidden mt-20 popular-categories bg-zinc-800 bg-opacity-60 ps-16 rounded-2xl">
         <div className="grid grid-cols-12">
           <div className="text left col-span-8 py-10">
             <div className="grid grid-cols-12">
@@ -95,7 +95,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto mt-20 suggestion">
+      <section className="container mx-auto hidden mt-20 suggestion">
         <div className="grid grid-cols-2">
           <div className="col">
             <div className="img-wrapper rounded-2xl overflow-hidden">
@@ -143,7 +143,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto mt-20 limited-time bg-zinc-800 px-16 py-5 rounded-2xl">
+      <section className="container mx-auto hidden mt-20 limited-time bg-zinc-800 px-16 py-5 rounded-2xl">
         <div className="grid grid-cols-12 gap-20">
           <div className="col col-span-4 py-10">
             <h4 className="uppercase">Limited Time Offer</h4>
@@ -181,7 +181,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <div className="container mx-auto mt-20 portfolio">
+      <div className="container mx-auto hidden mt-20 portfolio">
         <div className="grid grid-cols-12 gap-10">
           <div className="col col-span-8">
             <div className="grid grid-cols-12 gap-5 relative">
@@ -209,7 +209,7 @@ const HeroComponet = () => {
         </div>
       </div>
 
-      <div className="container mx-auto mt-20 newsletter">
+      <div className="container mx-auto hidden mt-20 newsletter">
         <div className="grid grid-cols-12">
           <div className="col col-span-6 bg-[#202020] flex flex-col justify-center items-start gap-5 px-24 w-full rounded-l-2xl overflow-hidden">
             <h4 className="uppercase text-[#5DBDAC]">Newsletter</h4>
@@ -242,7 +242,7 @@ const HeroComponet = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto mt-20 py-10 footer">
+      <div className="container mx-auto hidden mt-20 py-10 footer">
         <div className="grid grid-cols-12">
           <div className="row flex justify-between col-span-12">
             <div className="left flex items-center gap-10">

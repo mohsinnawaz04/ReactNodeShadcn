@@ -5,7 +5,7 @@ import MountainIcon from "./MountainIcon";
 
 const MiniHeader = () => {
   return (
-    <div className="mini-header container mx-auto flex justify-between items-center py-3">
+    <div className="mini-header container mx-auto justify-between items-center py-3 hidden sm:flex">
       <div>
         <p className="flex items-center gap-3 text-xs">
           <Phone size={18} color="#5DBDAC" strokeWidth={2} />
