@@ -7,6 +7,8 @@ import CategoryCard from "./CategoryCard";
 import TimeButton from "../Defaults/Button/TimeButton";
 import PortfolioCard from "../Defaults/Cards/PortfolioCard";
 import TweetCarousel from "../Defaults/Carousels/TweetCarousel";
+import { Input } from "../ui/input";
+import { ArrowRight, MoveRight } from "lucide-react";
 
 const HeroComponet = () => {
   const [numberOfProducts, setNumberOfProducts] = useState([]);
@@ -204,6 +206,41 @@ const HeroComponet = () => {
           </div>
         </div>
       </div>
+
+      <div className="container mx-auto hidden mt-20 newsletter">
+        <div className="grid grid-cols-12">
+          <div className="col col-span-6 bg-[#202020] flex flex-col justify-center items-start gap-5 px-24 w-full rounded-l-2xl overflow-hidden">
+            <h4 className="uppercase text-[#5DBDAC]">Newsletter</h4>
+            <h2 className="text-4xl font-semibold">Signup & Get 10 % Off</h2>
+            <p className="opacity-80 font-light">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
+              tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+            </p>
+            <div className="inquiry w-full flex justify-between gap-2">
+              <Input
+                type="text"
+                placeholder="Email"
+                className="p-5 bg-white bg-opacity-10 border-none"
+              />
+              <ButtonComponent
+                classes={"uppercase px-7 py-5 bg-white bg-opacity-10"}
+              >
+                <MoveRight color="#5DBDAC" />
+              </ButtonComponent>
+            </div>
+          </div>
+          <div className="col col-span-6 rounded-r-2xl overflow-hidden">
+            <div className="img-wrapper">
+              <img
+                src="images/newsletter/01.png"
+                className="w-full"
+                alt="Cover Image"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container mx-auto mt-20 footer"></div>
     </>
   );
 };
