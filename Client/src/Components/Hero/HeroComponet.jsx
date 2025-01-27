@@ -8,7 +8,9 @@ import TimeButton from "../Defaults/Button/TimeButton";
 import PortfolioCard from "../Defaults/Cards/PortfolioCard";
 import TweetCarousel from "../Defaults/Carousels/TweetCarousel";
 import { Input } from "../ui/input";
-import { ArrowRight, MoveRight } from "lucide-react";
+import { Headset, MoveRight } from "lucide-react";
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { Separator } from "../ui/separator";
 
 const HeroComponet = () => {
   const [numberOfProducts, setNumberOfProducts] = useState([]);
@@ -22,14 +24,14 @@ const HeroComponet = () => {
 
   return (
     <>
-      <section className="container mx-auto hidden">
+      <section className="container mx-auto mt-20">
         <div className="row flex gap-5">
           <HeroMain />
           <HeroAside />
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20">
+      <section className="container mx-auto mt-20">
         <div className="product-catalogue mt-20">
           <h2 className="mt-10 mb-0 text-4xl text-center font-semibold">
             New Arrivals
@@ -42,7 +44,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20 popular-categories bg-zinc-800 bg-opacity-60 ps-10 rounded-2xl">
+      <section className="container mx-auto mt-20 popular-categories bg-zinc-800 bg-opacity-60 ps-10 rounded-2xl">
         <div className="grid grid-cols-12">
           <div className="text left col-span-8 py-10">
             <div className="grid grid-cols-12">
@@ -93,7 +95,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20 suggestion">
+      <section className="container mx-auto mt-20 suggestion">
         <div className="grid grid-cols-2">
           <div className="col">
             <div className="img-wrapper rounded-2xl overflow-hidden">
@@ -141,7 +143,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20 limited-time bg-zinc-800 px-16 py-5 rounded-2xl">
+      <section className="container mx-auto mt-20 limited-time bg-zinc-800 px-16 py-5 rounded-2xl">
         <div className="grid grid-cols-12 gap-20">
           <div className="col col-span-4 py-10">
             <h4 className="uppercase">Limited Time Offer</h4>
@@ -179,7 +181,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <div className="container mx-auto hidden mt-20 portfolio">
+      <div className="container mx-auto mt-20 portfolio">
         <div className="grid grid-cols-12 gap-10">
           <div className="col col-span-8">
             <div className="grid grid-cols-12 gap-5 relative">
@@ -207,7 +209,7 @@ const HeroComponet = () => {
         </div>
       </div>
 
-      <div className="container mx-auto hidden mt-20 newsletter">
+      <div className="container mx-auto mt-20 newsletter">
         <div className="grid grid-cols-12">
           <div className="col col-span-6 bg-[#202020] flex flex-col justify-center items-start gap-5 px-24 w-full rounded-l-2xl overflow-hidden">
             <h4 className="uppercase text-[#5DBDAC]">Newsletter</h4>
@@ -240,7 +242,102 @@ const HeroComponet = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto mt-20 footer"></div>
+      <div className="container mx-auto mt-20 py-10 footer">
+        <div className="grid grid-cols-12">
+          <div className="row flex justify-between col-span-12">
+            <div className="left flex items-center gap-10">
+              <h2 className="logo bg-[#5DBDAC] px-5 text-2xl font-bold leading-9 tracking-wider rounded-lg">
+                LOGO
+              </h2>
+              <div className="support-info flex items-center gap-3">
+                <Headset size={30} color="#75BBAD" />
+                <h6 className="support-email text-sm">
+                  support@storemail.com <br /> <span>1234567890</span>
+                </h6>
+              </div>
+            </div>
+            <div className="right flex items-center gap-5">
+              <FaFacebook className="facebook opacity-50" size={20} />
+              <FaYoutube className="youtube opacity-50" size={23} />
+              <FaInstagram className="instagram opacity-50" size={20} />
+            </div>
+          </div>
+
+          <div className="row grid grid-cols-12 col-span-12 mt-20">
+            <div className="left about-info col-span-3 space-y-5">
+              <h4 className="font-semibold text-xl">About Us</h4>
+              <p className="opacity-80 font-light pr-12">
+                Lorem ipsum dolor sit amet, adipiscing elit. Ut elit tellus,
+                luctus nec lamcorper mattis, pulvinar dapibus leo.
+              </p>
+              <Separator className="opacity-10" />
+
+              <div className="flex items-center gap-5">
+                <div className="img-wrapper">
+                  <img
+                    src="images/footer/shopping-bag.png"
+                    alt="Shopping Bag"
+                  />
+                </div>
+                <p className="leading-5 font-light">
+                  15 days return policy <br />{" "}
+                  <span className="opacity-80">from receiving your order</span>
+                </p>
+              </div>
+            </div>
+            <div className="right links col-span-9 flex justify-evenly items-start">
+              <div className="col space-y-5">
+                <h4>Here to Help</h4>
+                <ul className="opacity-60 font-light text-sm space-y-2">
+                  <li>Help & contact us</li>
+                  <li>Our stories</li>
+                  <li>Our services</li>
+                  <li>Customer services</li>
+                  <li>Track your order</li>
+                  <li>Delivery & collection</li>
+                  <li>Returns & refunds</li>
+                </ul>
+              </div>
+              <div className="col space-y-5">
+                <h4>Shopping</h4>
+                <ul className="opacity-60 font-light text-sm space-y-2">
+                  <li>Wish list</li>
+                  <li>Buying guides</li>
+                  <li>Inspiration</li>
+                  <li>Gift cards & vouchers</li>
+                  <li>Shop by brand</li>
+                  <li>Secure shopping</li>
+                </ul>
+              </div>
+              <div className="col space-y-5">
+                <h4>Company</h4>
+                <ul className="opacity-60 font-light text-sm space-y-2">
+                  <li>Contributions</li>
+                  <li>Company information</li>
+                  <li>Investor relations</li>
+                  <li>Logo and media</li>
+                  <li>Our blog</li>
+                  <li>Supply chain</li>
+                  <li>Special events</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="footer-bottom col-span-12 mt-20 space-y-5">
+              <Separator className="opacity-10" />
+              <div className="flex opacity-50 font-light text-sm">
+                <p>© Copyright 2024 | all rights reserved.</p>
+                <ul className="flex gap-5 ml-auto">
+                  <li>Terms & conditions</li>
+                  <li>Privacy</li>
+                  <li>Cookies</li>
+                  <li>Accessibility</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
