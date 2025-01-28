@@ -190,10 +190,10 @@ const HeroComponet = () => {
       </section>
 
       <div className="container mx-auto hidden mt-20 portfolio">
-        <div className="grid grid-cols-12 gap-10">
-          <div className="col col-span-8">
+        <div className="grid grid-cols-12 gap-0 px-5 xl:gap-10 xl:px-0">
+          <div className="col col-span-12 order-2 mt-10 xl:col-span-8 xl:mt-0 xl:order-[unset]">
             <div className="grid grid-cols-12 gap-5 relative">
-              <div className="instagram-card absolute flex flex-col justify-between items-center bg-[#171717] max-w-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-y-3 p-10 px-14 rounded-2xl">
+              <div className="instagram-card absolute flex flex-col justify-between items-center bg-[#171717] w-4/5 max-h-60 sm:max-h-[unset] overflow-scroll scrollbard-hide md:w-full max-w-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-y-3 p-10 px-14 rounded-2xl">
                 <h4 className="uppercase text-[#5DBDAC] font-semibold">
                   Instagram
                 </h4>
@@ -211,15 +211,15 @@ const HeroComponet = () => {
                 ))}
             </div>
           </div>
-          <div className="col col-span-4 tweet-carousel rounded-2xl bg-[#5DBDAC] bg-opacity-20">
+          <div className="col col-span-full tweet-carousel rounded-2xl bg-[#5DBDAC] bg-opacity-20 xl:col-span-4">
             <TweetCarousel />
           </div>
         </div>
       </div>
 
       <div className="container mx-auto hidden mt-20 newsletter">
-        <div className="grid grid-cols-12">
-          <div className="col col-span-6 bg-[#202020] flex flex-col justify-center items-start gap-5 px-24 w-full rounded-l-2xl overflow-hidden">
+        <div className="grid grid-cols-12 px-5">
+          <div className="col col-span-full bg-[#202020] flex flex-col justify-center items-start gap-5 px-10 py-20 w-full overflow-hidden rounded-2xl lg:rounded-none lg:rounded-l-2xl lg:py-10 lg:px-24 lg:col-span-8 xl:col-span-6">
             <h4 className="uppercase text-[#5DBDAC]">Newsletter</h4>
             <h2 className="text-4xl font-semibold">Signup & Get 10 % Off</h2>
             <p className="opacity-80 font-light">
@@ -239,18 +239,18 @@ const HeroComponet = () => {
               </ButtonComponent>
             </div>
           </div>
-          <div className="col col-span-6 rounded-r-2xl overflow-hidden">
-            <div className="img-wrapper">
+          <div className="col col-span-full overflow-hidden rounded-none hidden lg:block lg:rounded-r-2xl lg:col-span-4 xl:col-span-6">
+            <div className="img-wrapper h-full">
               <img
                 src="images/newsletter/01.png"
-                className="w-full"
+                className="w-full object-cover"
                 alt="Cover Image"
               />
             </div>
           </div>
         </div>
       </div>
-      <div className="container mx-auto hidden mt-20 py-10 footer">
+      <div className="container mx-auto mt-20 py-10 px-5 footer">
         <div className="grid grid-cols-12">
           <div className="row flex justify-between col-span-12">
             <div className="left flex items-center gap-10">
@@ -272,7 +272,7 @@ const HeroComponet = () => {
           </div>
 
           <div className="row grid grid-cols-12 col-span-12 mt-20">
-            <div className="left about-info col-span-3 space-y-5">
+            <div className="left about-info col-span-12 sm:col-span-6 lg:col-span-3 space-y-5">
               <h4 className="font-semibold text-xl">About Us</h4>
               <p className="opacity-80 font-light pr-12">
                 Lorem ipsum dolor sit amet, adipiscing elit. Ut elit tellus,
@@ -293,7 +293,8 @@ const HeroComponet = () => {
                 </p>
               </div>
             </div>
-            <div className="right links col-span-9 flex justify-evenly items-start">
+
+            <div className="right links col-span-12 mt-20 flex flex-wrap justify-stretch gap-10 items-start lg:mt-0 sm:justify-between lg:justify-evenly lg:col-span-9">
               <div className="col space-y-5">
                 <h4>Here to Help</h4>
                 <ul className="opacity-60 font-light text-sm space-y-2">

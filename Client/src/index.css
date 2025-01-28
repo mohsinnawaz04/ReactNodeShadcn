@@ -135,3 +135,11 @@
 .iphone-wrapper {
   margin-top: auto !important;
 }
+
+.scrollbard-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbard-hide::-webkit-scrollbar {
+  display: none;
+}

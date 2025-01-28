@@ -17,7 +17,7 @@ const TweetCarousel = () => {
       autoplay={{ delay: 2500 }}
     >
       <SwiperSlide>
-        <div className="div carousel tweets-carousel flex flex-col h-full w-full gap-14 p-10">
+        <div className="div carousel tweets-carousel flex flex-col w-full gap-14 p-10 py-0">
           <div className="user-info flex items-center gap-5 ">
             <div className="profile-img img-wrapper">
               <img
