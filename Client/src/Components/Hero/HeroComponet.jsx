@@ -24,7 +24,7 @@ const HeroComponet = () => {
 
   return (
     <>
-      <section className="container mx-auto mt-20">
+      <section className="container mx-auto hidden mt-20">
         <div className="row flex gap-5 flex-col xl:flex-row">
           <HeroMain />
           <HeroAside />
@@ -44,13 +44,15 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20 popular-categories bg-zinc-800 bg-opacity-60 ps-16 rounded-2xl">
+      <section className="container mx-auto hidden mt-20 popular-categories bg-zinc-800 bg-opacity-60 rounded-2xl overflow-hidden">
         <div className="grid grid-cols-12">
-          <div className="text left col-span-8 py-10">
-            <div className="grid grid-cols-12">
-              <div className="col-span-4 flex flex-col items-start justify-between">
-                <h2 className="text-4xl font-bold mr-6">Popular Categories</h2>
-                <p className="my-5 lg:pe-24">
+          <div className="text left py-10 col-span-12 order-2 px-7 md:px-16 2xl:col-span-8 2xl:order-[unset]">
+            <div className="grid grid-cols-12 space-y-10 lg:space-y-0">
+              <div className="flex items-start justify-between space-y-5 col-span-12 flex-wrap lg:flex-nowrap lg:col-span-4 lg:flex-col">
+                <h2 className="text-4xl font-bold lg:mr-6">
+                  Popular Categories
+                </h2>
+                <p className="lg:pe-10">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
                   elit tellus luctus ullamcorper mattis, pulvinar dapibus leo.
                 </p>
@@ -59,8 +61,9 @@ const HeroComponet = () => {
                   text="Shop Now"
                 />
               </div>
-              <div className="col-span-8">
-                <div className="grid grid-cols-2 gap-5">
+
+              <div className="col-span-12 lg:col-span-8">
+                <div className="grid sm:grid-cols-2 gap-5">
                   {/* Category Card */}
                   {Array(10)
                     .fill(null)
@@ -72,18 +75,19 @@ const HeroComponet = () => {
               </div>
             </div>
           </div>
-          <div className="poster right col-span-4 relative bg-[#395C56] pe-10 rounded-r-2xl">
-            <div className="poster-img img-wrapper absolute top-0 left-0 z-0 h-full">
+
+          <div className="poster right relative bg-[#395C56] py-10 px-7 md:px-16 col-span-12 lg:py-20 2xl:col-span-4 2xl:rounded-r-2xl">
+            <div className="poster-img img-wrapper opacity-80 sm:opacity-100 aspect-video absolute top-0 z-0 h-full left-1/2 -translate-x-1/2 lg:aspect-auto 2xl:left-0 2xl:-translate-x-0">
               <img
                 src="images/popular-categories/poster.png"
                 alt="Poster Image"
               />
             </div>
-            <div className="h-full flex flex-col pb-10 px-10 justify-end items-start z-20 relative">
+            <div className="h-full flex flex-col pb-10 justify-end items-start z-20 relative">
               <h4 className="sub-heading uppercase text-lg tracking-wide font-semibold mt-auto">
                 Step into savings
               </h4>
-              <h2 className="heading text-4xl font-bold tracking-wide my-5">
+              <h2 className="heading text-4xl font-bold tracking-wide my-5 max-w-[20ch] 2xl:max-w-max">
                 Fashion Sale with Incredible Discounts!
               </h2>
               <ButtonComponent
@@ -96,18 +100,19 @@ const HeroComponet = () => {
       </section>
 
       <section className="container mx-auto hidden mt-20 suggestion">
-        <div className="grid grid-cols-2">
-          <div className="col">
+        <div className="grid grid-cols-2 gap-10 px-5 xl:px-0 2xl:gap-0">
+          <div className="col-span-2 order-2 hidden xl:order-[unset] xl:col-span-1 lg:block">
             <div className="img-wrapper rounded-2xl overflow-hidden">
               <img
                 src="images/suggestions/keyboard-button.png"
-                className="keyboard-img"
+                className="keyboard-img w-full xl:w-auto"
                 alt="Keyboard Button"
               />
             </div>
           </div>
-          <div className="col flex flex-col justify-between items-start">
-            <div className="text-card space-y-10 sm:px-10 lg:px-20 lg:py-10">
+
+          <div className="col-span-2 xl:col-span-1 flex flex-col justify-between items-start space-y-10 xl:space-y-0">
+            <div className="text-card space-y-10 xl:px-10 lg:py-10">
               <h2 className="text-4xl font-semibold">
                 Didn't find anything interesting?
               </h2>
@@ -119,22 +124,25 @@ const HeroComponet = () => {
               </p>
               <ButtonComponent classes={"uppercase px-8"} text="Get Promo" />
             </div>
-            <div className="images-card flex gap-5">
-              <div className="img-wrapper">
+            <div className="images-card flex flex-wrap justify-center sm:justify-normal lg:flex-nowrap gap-5">
+              <div className="img-wrapper w-full lg:w-[300px] xl:w-auto">
                 <img
                   src="images/suggestions/carousel-img-1.png"
+                  className="w-full"
                   alt="Product Card Image"
                 />
               </div>
-              <div className="img-wrapper">
+              <div className="img-wrapper w-full lg:w-[300px] xl:w-auto">
                 <img
                   src="images/suggestions/carousel-img-2.png"
+                  className="w-full"
                   alt="Product Card Image"
                 />
               </div>
-              <div className="img-wrapper">
+              <div className="img-wrapper w-full lg:w-[300px] xl:w-auto">
                 <img
                   src="images/suggestions/carousel-img-3.png"
+                  className="w-full"
                   alt="Product Card Image"
                 />
               </div>
@@ -143,24 +151,24 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20 limited-time bg-zinc-800 px-16 py-5 rounded-2xl">
-        <div className="grid grid-cols-12 gap-20">
-          <div className="col col-span-4 py-10">
+      <section className="container mx-auto hidden mt-20 limited-time bg-zinc-800 px-5 sm:px-10 lg:px-16 py-5 rounded-2xl">
+        <div className="grid grid-cols-12 lg:gap-10 2xl:gap-20">
+          <div className="py-10 col col-span-12 xl:col-span-4">
             <h4 className="uppercase">Limited Time Offer</h4>
-            <h2 className="text-4xl font-semibold mt-2 mb-7">
+            <h2 className="text-3xl font-semibold mt-2 mb-7 sm:text-4xl">
               Grab Your Favorites at Our Fashion Sale!
             </h2>
-            <div className="row grid grid-cols-12 gap-5">
-              <div className="col col-span-3">
+            <div className="row flex gap-1 flex-wrap 2xl:justify-between 2xl:flex-nowrap">
+              <div className="flex-shrink-0 w-20 sm:w-24">
                 <TimeButton time={44} timeUnit={"Days"} />
               </div>
-              <div className="col col-span-3">
+              <div className="flex-shrink-0 w-20 sm:w-24">
                 <TimeButton time={18} timeUnit={"Hours"} />
               </div>
-              <div className="col col-span-3">
+              <div className="flex-shrink-0 w-20 sm:w-24">
                 <TimeButton time={49} timeUnit={"Minutes"} />
               </div>
-              <div className="col col-span-3">
+              <div className="flex-shrink-0 w-20 sm:w-24">
                 <TimeButton time={35} timeUnit={"Seconds"} />
               </div>
             </div>
@@ -169,8 +177,8 @@ const HeroComponet = () => {
               text="Grab Your Favorites"
             />
           </div>
-          <div className="col col-span-8">
-            <div className="row flex justify-between">
+          <div className="col col-span-12 xl:col-span-8">
+            <div className="row flex gap-5 flex-wrap justify-center lg:flex-nowrap md:justify-between">
               {Array(3)
                 .fill(null)
                 .map((_, idx) => (
