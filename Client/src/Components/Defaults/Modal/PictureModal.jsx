@@ -11,7 +11,7 @@ import ImageUpload from "../ImageUpload/ImageUpload";
 const PictureModal = ({ open, setOpen, setCroppedFile, user }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-foreground">
         <DialogHeader className="mt-5">
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>

@@ -6,16 +6,16 @@ const UserInterests = () => {
       <h2 className="font-bold text-xl">Interests</h2>
 
       <div className="tags flex flex-wrap gap-5 mt-4">
-        <span className="tag text-[12px] bg-slate-300 px-5 py-1 rounded-full">
+        <span className="tag text-[12px] bg-zinc-800 px-5 py-1 rounded-full">
           Technology
         </span>
-        <span className="tag text-[12px] bg-slate-300 px-5 py-1 rounded-full">
+        <span className="tag text-[12px] bg-zinc-800 px-5 py-1 rounded-full">
           Jewellery
         </span>
-        <span className="tag text-[12px] bg-slate-300 px-5 py-1 rounded-full">
+        <span className="tag text-[12px] bg-zinc-800 px-5 py-1 rounded-full">
           Fashion
         </span>
-        <span className="tag text-[12px] bg-slate-300 px-5 py-1 rounded-full">
+        <span className="tag text-[12px] bg-zinc-800 px-5 py-1 rounded-full">
           Essentials
         </span>
       </div>

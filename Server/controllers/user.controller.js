@@ -96,6 +96,7 @@ const signup = asyncHandler(async (req, res) => {
       );
 
       profilePicUrl = uploadResult;
+      console.log("PROFILE PIC URL", profilePicUrl);
     } catch (uploadError) {
       return apiResponse.error(
         res,
@@ -106,8 +107,8 @@ const signup = asyncHandler(async (req, res) => {
     }
   }
 
-  newUser.profilePic = profilePicUrl;
-  await newUser.save();
+  newUser.profilePic = profilePicUrl?.secure_url;
+  await newUser.save(); 
 
   // Response Object for Frontend:
   const response = {

@@ -49,7 +49,7 @@ const Dropdown = () => {
             className="object-cover object-center h-full"
           />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="min-w-[160px] mt-2">
+        <DropdownMenuContent className="min-w-[160px] mt-2 bg-foreground text-background">
           <DropdownMenuLabel>
             {!currentUser ? (
               "My Account"
@@ -64,10 +64,8 @@ const Dropdown = () => {
                   className="w-8 h-8 rounded-full object-cover object-center"
                 />
                 <div className="info flex flex-col">
-                  <span className="name font-bold text-[13px] leading-3 text-zinc-800">{`${currentUser?.fName} ${currentUser?.lName}`}</span>
-                  <span className="email text-xs text-zinc-700">
-                    {currentUser?.email}
-                  </span>
+                  <span className="name font-bold text-[13px] leading-3">{`${currentUser?.fName} ${currentUser?.lName}`}</span>
+                  <span className="email text-xs">{currentUser?.email}</span>
                 </div>
               </div>
             )}

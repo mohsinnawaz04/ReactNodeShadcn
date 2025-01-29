@@ -24,14 +24,14 @@ const HeroComponet = () => {
 
   return (
     <>
-      <section className="container mx-auto hidden mt-20">
+      <section className="container mx-auto mt-20">
         <div className="row flex gap-5 flex-col xl:flex-row">
           <HeroMain />
           <HeroAside />
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20">
+      <section className="container mx-auto mt-20">
         <div className="product-catalogue mt-20">
           <h2 className="mt-10 mb-0 text-4xl text-center font-semibold">
             New Arrivals
@@ -44,7 +44,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20 popular-categories bg-zinc-800 bg-opacity-60 rounded-2xl overflow-hidden">
+      <section className="container mx-auto mt-20 popular-categories bg-zinc-800 bg-opacity-60 rounded-2xl overflow-hidden">
         <div className="grid grid-cols-12">
           <div className="text left py-10 col-span-12 order-2 px-7 md:px-16 2xl:col-span-8 2xl:order-[unset]">
             <div className="grid grid-cols-12 space-y-10 lg:space-y-0">
@@ -99,7 +99,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20 suggestion">
+      <section className="container mx-auto mt-20 suggestion">
         <div className="grid grid-cols-2 gap-10 px-5 xl:px-0 2xl:gap-0">
           <div className="col-span-2 order-2 hidden xl:order-[unset] xl:col-span-1 lg:block">
             <div className="img-wrapper rounded-2xl overflow-hidden">
@@ -151,7 +151,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <section className="container mx-auto hidden mt-20 limited-time bg-zinc-800 px-5 sm:px-10 lg:px-16 py-5 rounded-2xl">
+      <section className="container mx-auto mt-20 limited-time bg-zinc-800 px-5 sm:px-10 lg:px-16 py-5 rounded-2xl">
         <div className="grid grid-cols-12 lg:gap-10 2xl:gap-20">
           <div className="py-10 col col-span-12 xl:col-span-4">
             <h4 className="uppercase">Limited Time Offer</h4>
@@ -189,7 +189,7 @@ const HeroComponet = () => {
         </div>
       </section>
 
-      <div className="container mx-auto hidden mt-20 portfolio">
+      <section className="container mx-auto mt-20 portfolio">
         <div className="grid grid-cols-12 gap-0 px-5 xl:gap-10 xl:px-0">
           <div className="col col-span-12 order-2 mt-10 xl:col-span-8 xl:mt-0 xl:order-[unset]">
             <div className="grid grid-cols-12 gap-5 relative">
@@ -215,9 +215,9 @@ const HeroComponet = () => {
             <TweetCarousel />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto hidden mt-20 newsletter">
+      <section className="container mx-auto mt-20 newsletter">
         <div className="grid grid-cols-12 px-5">
           <div className="col col-span-full bg-[#202020] flex flex-col justify-center items-start gap-5 px-10 py-20 w-full overflow-hidden rounded-2xl lg:rounded-none lg:rounded-l-2xl lg:py-10 lg:px-24 lg:col-span-8 xl:col-span-6">
             <h4 className="uppercase text-[#5DBDAC]">Newsletter</h4>
@@ -249,10 +249,11 @@ const HeroComponet = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="container mx-auto mt-20 py-10 px-5 footer">
+      </section>
+
+      <section className="container mx-auto mt-20 py-10 px-5 footer">
         <div className="grid grid-cols-12">
-          <div className="row flex justify-between col-span-12">
+          <div className="row flex flex-wrap justify-between gap-10 col-span-12">
             <div className="left flex items-center gap-10">
               <h2 className="logo bg-[#5DBDAC] px-5 text-2xl font-bold leading-9 tracking-wider rounded-lg">
                 LOGO
@@ -295,7 +296,7 @@ const HeroComponet = () => {
             </div>
 
             <div className="right links col-span-12 mt-20 flex flex-wrap justify-stretch gap-10 items-start lg:mt-0 sm:justify-between lg:justify-evenly lg:col-span-9">
-              <div className="col space-y-5">
+              <div className="col space-y-5 flex-shrink-0 flex-grow-[1] sm:flex-grow-0">
                 <h4>Here to Help</h4>
                 <ul className="opacity-60 font-light text-sm space-y-2">
                   <li>Help & contact us</li>
@@ -334,9 +335,11 @@ const HeroComponet = () => {
 
             <div className="footer-bottom col-span-12 mt-20 space-y-5">
               <Separator className="opacity-10" />
-              <div className="flex opacity-50 font-light text-sm">
-                <p>© Copyright 2024 | all rights reserved.</p>
-                <ul className="flex gap-5 ml-auto">
+              <div className="flex flex-wrap justify-center md:justify-between gap-5 md:gap-10 opacity-50 font-light text-sm">
+                <p className="flex-shrink-0">
+                  © Copyright 2024 | all rights reserved.
+                </p>
+                <ul className="flex flex-wrap justify-center gap-5 md:ml-auto">
                   <li>Terms & conditions</li>
                   <li>Privacy</li>
                   <li>Cookies</li>
@@ -346,7 +349,7 @@ const HeroComponet = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

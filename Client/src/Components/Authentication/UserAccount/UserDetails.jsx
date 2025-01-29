@@ -15,7 +15,7 @@ const UserDetails = ({ user }) => {
           <span className="info-logo">
             <PhoneCall size={15} />
           </span>
-          {user?.phone ?? "0300-28849874"}
+          {user?.phone ?? "0300-0001234"}
         </p>
         <p className="location text-sm mb flex items-center gap-2 justify-start-4">
           <span className="info-logo">
