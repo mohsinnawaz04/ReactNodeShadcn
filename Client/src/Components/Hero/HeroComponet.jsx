@@ -11,17 +11,9 @@ import { Input } from "../ui/input";
 import { Headset, MoveRight } from "lucide-react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Separator } from "../ui/separator";
+import ProductsList from "../Products/ProductsList";
 
 const HeroComponet = () => {
-  const [numberOfProducts, setNumberOfProducts] = useState([]);
-
-  useEffect(() => {
-    let quantity = 5;
-    for (let i = 0; i < quantity; i++) {
-      setNumberOfProducts((prev) => [...prev, i]);
-    }
-  }, []);
-
   return (
     <>
       <section className="container mx-auto mt-20">
@@ -32,15 +24,9 @@ const HeroComponet = () => {
       </section>
 
       <section className="container mx-auto mt-20">
-        <div className="product-catalogue mt-20">
-          <h2 className="mt-10 mb-0 text-4xl text-center font-semibold">
-            New Arrivals
-          </h2>
-          <div className="row grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mx-auto place-items-center gap-5">
-            {numberOfProducts.map((product, idx) => (
-              <ProductCard key={idx} />
-            ))}
-          </div>
+        <div className="product-catalogue mt-20 text-center">
+          <h2 className="mt-10 mb-5 text-4xl font-semibold">New Arrivals</h2>
+          <ProductsList />
         </div>
       </section>
 
@@ -337,7 +323,7 @@ const HeroComponet = () => {
               <Separator className="opacity-10" />
               <div className="flex flex-wrap justify-center md:justify-between gap-5 md:gap-10 opacity-50 font-light text-sm">
                 <p className="flex-shrink-0">
-                  © Copyright 2024 | all rights reserved.
+                  © Copyright 2025 | all rights reserved.
                 </p>
                 <ul className="flex flex-wrap justify-center gap-5 md:ml-auto">
                   <li>Terms & conditions</li>
