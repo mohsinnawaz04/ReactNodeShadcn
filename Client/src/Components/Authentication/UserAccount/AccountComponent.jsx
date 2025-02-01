@@ -7,7 +7,6 @@ const AccountComponent = () => {
   const { currentUser } = useUser();
   return (
     <>
-      <Navbar />
       <div className="px-10">
         <h1 className="text-2xl font-bold">Account Profile</h1>
       </div>

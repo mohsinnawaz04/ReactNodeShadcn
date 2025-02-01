@@ -45,4 +45,29 @@ const uploadToCloudinary = async (fileBuffer, folder, publicId) => {
   // return optimizedUrl; // Return the optimized URL
 };
 
-export { cloudinary, initializeCloudinary, uploadToCloudinary };
+const productImageUploadToCloudinary = async (fileBuffer, folder, publicId) => {
+  const result = await new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        public_id: publicId,
+        resource_type: "image",
+        transformation: [{ fetch_format: "auto" }],
+      },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+    stream.end(fileBuffer);
+  });
+
+  return result;
+};
+
+export {
+  cloudinary,
+  initializeCloudinary,
+  uploadToCloudinary,
+  productImageUploadToCloudinary,
+};

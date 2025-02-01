@@ -10,6 +10,7 @@ dotenv.config();
 // const upload = multer(); // For memory storage (default)
 // Importing Routers
 import userRouter from "./routes/users.route.js";
+import productRouter from "./routes/products.route.js";
 
 // Creating express app
 const app = express();
@@ -44,6 +45,7 @@ app.get(baseApiURL, (req, res) => {
   console.log("On the base API route");
 });
 app.use(`${baseApiURL}/users`, userRouter);
+app.use(`${baseApiURL}/products`, productRouter);
 
 // Readying app for incoming requests on specified port
 app.listen(process.env.PORT, () => {

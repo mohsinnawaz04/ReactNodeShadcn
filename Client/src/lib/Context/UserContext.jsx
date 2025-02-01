@@ -12,6 +12,7 @@ export const useUser = () => {
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 

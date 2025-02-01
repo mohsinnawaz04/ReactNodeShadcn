@@ -1,12 +1,9 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Login from "./Login";
 import Signup from "./Signup";
-import { useEffect, useState } from "react";
-import { useUser } from "@/lib/Context/UserContext";
-import { LoaderCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 export function Authentication() {
+<<<<<<< HEAD
   const { currentUser, isLoading } = useUser();
   const navigate = useNavigate();
 
@@ -24,6 +21,8 @@ export function Authentication() {
     );
   }
 
+=======
+>>>>>>> e5520507322412f746fb3fbb0e0cb9c09e175c52
   return (
     <div className="flex justify-center items-center w-full h-screen bg-neutral-700">
       <Tabs defaultValue="login" className="w-[400px] shadow-md">
