@@ -1,8 +1,6 @@
-import Navbar from "../Navbar/Navbar.jsx";
 const ErrorPage = () => {
   return (
     <>
-      <Navbar />
       <div className="error-div flex flex-col justify-center items-center">
         <p className="uppercase text-2xl">Oops! Page Not Found</p>
         <h1 className="text-[300px] leading-[.8] font-bold flex gap-0">

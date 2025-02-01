@@ -108,7 +108,7 @@ const signup = asyncHandler(async (req, res) => {
   }
 
   newUser.profilePic = profilePicUrl?.secure_url;
-  await newUser.save(); 
+  await newUser.save();
 
   // Response Object for Frontend:
   const response = {
