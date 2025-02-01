@@ -12,8 +12,10 @@ import { Headset, MoveRight } from "lucide-react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Separator } from "../ui/separator";
 import ProductsList from "../Products/ProductsList";
+import { useNavigate } from "react-router-dom";
 
 const HeroComponet = () => {
+  const navigate = useNavigate();
   return (
     <>
       <section className="container mx-auto mt-20">

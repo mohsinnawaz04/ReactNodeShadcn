@@ -15,8 +15,6 @@ const HeroCarousel = () => {
       loop
       autoplay={{ delay: 2500 }}
       navigation
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
     >
       <SwiperSlide>
         <div className="img-wrapper">

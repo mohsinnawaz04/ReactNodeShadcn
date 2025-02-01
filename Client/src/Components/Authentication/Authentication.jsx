@@ -7,24 +7,24 @@ import { LoaderCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export function Authentication() {
-  const [isLoading, setIsLoading] = useState(true);
-  const { currentUser } = useUser();
+  const { currentUser, isLoading } = useUser();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (currentUser) {
-      navigate("/");
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 0);
-    }
-  }, [currentUser]);
+  console.log(currentUser);
 
-  return isLoading ? (
-    <div className="h-screen flex justify-center items-center">
-      <LoaderCircle size={80} className="animate-spin" />
-    </div>
-  ) : (
+  useEffect(() => {
+    currentUser && navigate("/");
+  }, [currentUser, navigate]);
+
+  if (isLoading || currentUser) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <LoaderCircle size={80} className="animate-spin" />
+      </div>
+    );
+  }
+
+  return (
     <div className="flex justify-center items-center w-full h-screen bg-neutral-700">
       <Tabs defaultValue="login" className="w-[400px] shadow-md">
         <TabsList className="grid w-full grid-cols-2">

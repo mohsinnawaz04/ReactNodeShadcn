@@ -12,7 +12,7 @@ export const useUser = () => {
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   async function login(userDetails) {
@@ -122,18 +122,29 @@ export function UserProvider({ children }) {
       const userObject = jwtDecode(token);
       setUser(userObject);
     }
+
+    setIsLoading(false);
   }
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token && token !== null) {
       init(token);
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
   return (
     <UserContext.Provider
-      value={{ currentUser: user, login, signup, updateProfile, logout }}
+      value={{
+        currentUser: user,
+        isLoading,
+        login,
+        signup,
+        updateProfile,
+        logout,
+      }}
     >
       {children}
     </UserContext.Provider>

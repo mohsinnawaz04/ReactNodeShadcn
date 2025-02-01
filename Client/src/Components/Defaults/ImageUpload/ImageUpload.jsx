@@ -60,17 +60,15 @@ const ImageUpload = ({ defaultSrc, setCroppedFile, setOpen }) => {
         <Cropper
           className="mt-5"
           ref={cropperRef}
-          style={{ height: 400, width: "100%" }}
-          zoomTo={0.5}
-          initialAspectRatio={1}
+          style={{ height: "400px", width: "100%" }}
+          initialAspectRatio={1 / 1}
+          aspectRatio={1 / 1}
           preview=".img-peview"
           src={image}
           viewMode={1}
-          minCropBoxHeight={10}
-          minCropBoxWidth={10}
           modal={true}
           background={true}
-          responsive={true}
+          responsive={false}
           checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
           guides={true}
           center={true}
