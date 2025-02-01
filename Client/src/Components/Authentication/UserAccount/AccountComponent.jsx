@@ -1,4 +1,3 @@
-import Navbar from "@/Components/Defaults/Navbar/Navbar";
 import AccountInfo from "./AccountInfo";
 import { useUser } from "@/lib/Context/UserContext";
 import UserInterests from "./UserInterests";

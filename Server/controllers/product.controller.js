@@ -1,6 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { apiResponse } from "../utils/apiResponse.js";
-// import productModel from "../models/productModel.js";
+import productModel from "../models/productModel.js";
 import productImageModel from "../models/productImageModel.js";
 import { productImageUploadToCloudinary } from "../config/cloudinary.config.js";
 import { formatTimestampForWhatsApp } from "../utils/formatTime.js";
@@ -9,9 +9,8 @@ import { formatTimestampForWhatsApp } from "../utils/formatTime.js";
 const productUpload = asyncHandler(async (req, res) => {
   const { name, description, category, price } = req.body;
 
-  const featuredImage = req.files ? req.files[0] : null;
-  const formattedDate = formatTimestampForWhatsApp(Date.now());
-  const publicId = `${featuredImage.originalname}-${formattedDate}`;
+  const featuredImage = req.files ? req.files["featuredImage"]?.[0] : null;
+  const galleryImages = req.files ? req.files["galleryImages"] : null;
 
   if (
     [name, description, category, price].some((field) => field.trim() === "")
@@ -19,47 +18,86 @@ const productUpload = asyncHandler(async (req, res) => {
     return apiResponse.error(res, "All Fields are required", null, 500);
   }
 
-  if (!featuredImage || featuredImage.length === 0) {
-    return apiResponse.error(res, "No Images Found", null, 500);
-  }
-
   // Create Product in db
-  const product = await productModel.create({
-    name,
-    description,
-    category,
-    price,
-    featuredImage,
-  });
+  const product = await productModel
+    .create({
+      name,
+      description,
+      category,
+      price,
+      featuredImage: null,
+    })
+    .catch((err) => {
+      return apiResponse.error(
+        res,
+        "Database error while creating product",
+        err,
+        500
+      );
+    });
 
-  if (product)
-    apiResponse.success(
-      res,
-      "Product Has been created Successfully.",
-      product,
-      201
+  if (featuredImage) {
+    const formattedDate = formatTimestampForWhatsApp(Date.now());
+    const publicId = `${featuredImage?.originalname}-${formattedDate}`;
+
+    // Upload Images in cloudinary and get the URL
+    const result = await productImageUploadToCloudinary(
+      featuredImage.buffer,
+      `product_images/${product._id}`,
+      publicId
     );
 
-  // Upload Images in cloudinary and get the URL
-  const result = await productImageUploadToCloudinary(
-    featuredImage?.buffer,
-    "product-images",
-    publicId
-  );
+    if (result) {
+      product.featuredImage = result.secure_url;
+      await product.save();
+    }
 
-  const producter = {
-    name,
-    description,
-    category,
-    price,
-    result: result.secure_url,
-  };
+    if (galleryImages.length > 0) {
+      const uploadPromises = galleryImages.map(async (image) => {
+        const formattedDate = formatTimestampForWhatsApp(Date.now());
+        const publicId = `${image.originalname}-${formattedDate}`;
 
-  console.log(producter);
+        const result = await productImageUploadToCloudinary(
+          image.buffer,
+          `product_images/${product._id}`,
+          publicId
+        );
 
-  return apiResponse.success(res, "Product has been created.", producter);
+        return productImageModel.create({
+          url: result.secure_url,
+          product: product._id,
+        });
+      });
+
+      // Wait for all uploads to complete
+      await Promise.all(uploadPromises);
+    }
+  }
+
+  return apiResponse.success(res, "Product has been created.", product, 201);
 });
 
+const fetchAllProducts = asyncHandler(async (req, res) => {
+  const products = await productModel.aggregate([
+    {
+      $lookup: {
+        from: "productimages",
+        localField: "_id",
+        foreignField: "product",
+        as: "imageGallery",
+      },
+    },
+  ]);
+
+  apiResponse.success(
+    res,
+    "Products have been fetched successfully",
+    products,
+    201
+  );
+});
+
+// Not using this controller in production. The one at top in enough for now
 const addProductImage = asyncHandler(async (req, res) => {
   const { url } = req.body;
 
@@ -106,4 +144,4 @@ const addProductImage = asyncHandler(async (req, res) => {
   );
 });
 
-export { productUpload, addProductImage };
+export { productUpload, addProductImage, fetchAllProducts };
