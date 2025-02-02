@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { mongo, Schema } from "mongoose";
 
 const productSchema = new Schema(
   {
@@ -10,6 +10,7 @@ const productSchema = new Schema(
     category: String,
     price: String,
     featuredImage: String,
+    images: [{ type: Schema.Types.ObjectId, ref: "ProductImage", default: [] }],
   },
   { timestamps: true }
 );

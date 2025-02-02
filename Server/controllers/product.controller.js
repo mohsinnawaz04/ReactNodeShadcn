@@ -6,7 +6,7 @@ import { productImageUploadToCloudinary } from "../config/cloudinary.config.js";
 import { formatTimestampForWhatsApp } from "../utils/formatTime.js";
 import mongoose from "mongoose";
 
-// Single Product Upload Controller
+// Single Product Upload
 const productUpload = asyncHandler(async (req, res) => {
   const { name, description, category, price } = req.body;
 
@@ -50,7 +50,7 @@ const productUpload = asyncHandler(async (req, res) => {
 
     if (result) {
       product.featuredImage = result.secure_url;
-      await product.save();
+      // await product.save();
     }
 
     if (galleryImages.length > 0) {
@@ -64,9 +64,98 @@ const productUpload = asyncHandler(async (req, res) => {
           publicId
         );
 
+        const productImage = await productImageModel
+          .create({
+            url: result.secure_url,
+            product: product._id,
+          })
+          .catch((err) => {
+            return apiResponse.error(
+              res,
+              "Database error while creating product Images",
+              err,
+              500
+            );
+          });
+
+        product.images.push(productImage._id);
+      });
+
+      // Wait for all uploads to complete
+      await Promise.all(uploadPromises);
+    }
+  }
+
+  product.save();
+
+  return apiResponse.success(res, "Product has been created.", product, 201);
+});
+
+// Edit Product
+const updateProduct = asyncHandler(async (req, res) => {
+  // Product Id is needed for update:
+  const { productId } = req.params;
+
+  const { name, description, category, price } = req.body;
+
+  const featuredImage = req.files ? req.files["featuredImage"]?.[0] : null;
+  const galleryImages = req.files ? req.files["galleryImages"] : null;
+
+  if (
+    [name, description, category, price].some((field) => field.trim() === "")
+  ) {
+    return apiResponse.error(res, "All Fields are required", null, 500);
+  }
+
+  // Update Product in db
+  const updatedProduct = await productModel
+    .findOneAndUpdate(
+      { _id: productId },
+      {
+        name,
+        description,
+        category,
+        price,
+      }
+    )
+    .catch((err) => {
+      return apiResponse.error(
+        res,
+        "Database error while updating product",
+        err,
+        500
+      );
+    });
+
+  if (featuredImage) {
+    const formattedDate = formatTimestampForWhatsApp(Date.now());
+    const publicId = `${featuredImage?.originalname}-${formattedDate}`;
+
+    // Upload Images in cloudinary and get the URL
+    const result = await productImageUploadToCloudinary(
+      featuredImage.buffer,
+      `product_images/${productId}`,
+      publicId
+    );
+
+    if (result) {
+      updatedProduct.featuredImage = result.secure_url;
+    }
+
+    if (galleryImages.length > 0) {
+      const uploadPromises = galleryImages.map(async (image) => {
+        const formattedDate = formatTimestampForWhatsApp(Date.now());
+        const publicId = `${image.originalname}-${formattedDate}`;
+
+        const result = await productImageUploadToCloudinary(
+          image.buffer,
+          `product_images/${productId}`,
+          publicId
+        );
+
         return productImageModel.create({
           url: result.secure_url,
-          product: product._id,
+          $set: { product: productId },
         });
       });
 
@@ -75,9 +164,15 @@ const productUpload = asyncHandler(async (req, res) => {
     }
   }
 
-  return apiResponse.success(res, "Product has been created.", product, 201);
+  return apiResponse.success(
+    res,
+    "Product has been updated.",
+    updatedProduct,
+    201
+  );
 });
 
+// Fetch All Products
 const fetchAllProducts = asyncHandler(async (req, res) => {
   const products = await productModel.aggregate([
     {
