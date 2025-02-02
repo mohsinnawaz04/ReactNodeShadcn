@@ -253,35 +253,62 @@ const addProductImage = asyncHandler(async (req, res) => {
   }
 });
 
-// Find a Single product
+// Find a Single product using lookup :::: Not using this because it was for learning aggregation pipeline
+// const filterProductById = asyncHandler(async (req, res) => {
+//   const { productId } = req.params;
+
+//   if (!productId)
+//     return apiResponse.error(res, "Product Id not found.", null, 500);
+
+//   try {
+//     const filteredProduct = await productModel.aggregate([
+//       {
+//         $match: { _id: new mongoose.Types.ObjectId(productId) },
+//       },
+//       {
+//         $lookup: {
+//           from: "productimages",
+//           localField: "_id",
+//           foreignField: "product",
+//           as: "imageGallery",
+//         },
+//       },
+//     ]);
+
+//     if (!filterProductById) {
+//       return apiResponse.error(res, "Product Not Found.", 500);
+//     }
+
+//     return apiResponse.success(res, "PRODUCT FOUND", filteredProduct, 200);
+//   } catch (err) {
+//     return apiResponse.error(res, "Product Not Found.", err, 500);
+//   }
+// });
+
+// Find a Single product using populate (for Performance Optimization)
 const filterProductById = asyncHandler(async (req, res) => {
   const { productId } = req.params;
 
-  if (!productId)
+  if (!productId) {
     return apiResponse.error(res, "Product Id not found.", null, 500);
+  }
+  // Optional: Validate ObjectId format
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return apiResponse.error(res, "Invalid Product Id.", null, 400);
+  }
 
   try {
-    const filteredProduct = await productModel.aggregate([
-      {
-        $match: { _id: new mongoose.Types.ObjectId(productId) },
-      },
-      {
-        $lookup: {
-          from: "productimages",
-          localField: "_id",
-          foreignField: "product",
-          as: "imageGallery",
-        },
-      },
-    ]);
+    const product = await productModel
+      .findById(productId)
+      .populate("images", "url -_id");
 
-    if (!filterProductById) {
+    if (!product) {
       return apiResponse.error(res, "Product Not Found.", 500);
     }
 
-    return apiResponse.success(res, "PRODUCT FOUND", filteredProduct, 200);
+    return apiResponse.success(res, "PRODUCT FOUND", product, 200);
   } catch (err) {
-    return apiResponse.error(res, "Product Not Found.", err, 500);
+    return apiResponse.error(res, "Product Not Found.", err, 404);
   }
 });
 
