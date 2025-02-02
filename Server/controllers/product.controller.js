@@ -4,6 +4,7 @@ import productModel from "../models/productModel.js";
 import productImageModel from "../models/productImageModel.js";
 import { productImageUploadToCloudinary } from "../config/cloudinary.config.js";
 import { formatTimestampForWhatsApp } from "../utils/formatTime.js";
+import mongoose from "mongoose";
 
 // Single Product Upload Controller
 const productUpload = asyncHandler(async (req, res) => {
@@ -97,20 +98,40 @@ const fetchAllProducts = asyncHandler(async (req, res) => {
   );
 });
 
-// Not using this controller in production. The one at top in enough for now
-const addProductImage = asyncHandler(async (req, res) => {
-  const { url } = req.body;
-
+const deleteProduct = asyncHandler(async (req, res) => {
   const { productId } = req.params;
+
+  productModel.findByIdAndDelete(productId, (err, res) => {
+    // Product is not deleted because of some error.
+    if (err) return apiResponse.error(res, "Cannot Delete Product.", err, 500);
+
+    // Product has been deleted successfully.
+    apiResponse.success(
+      res,
+      "Product has been deleted Successfully.",
+      null,
+      200
+    );
+  });
+});
+
+// Not using this controller in production. The one at top in enough for "NOW!"...
+// This router can and should only be accessed by ADMIN!
+const addProductImage = asyncHandler(async (req, res) => {
+  // Get id of product from api request (frontend will request with product Id...)
+  const { productId } = req.params;
+
+  // Multer will give images - Maybe one maybe multiple depending on the Admin
   const images = req.files ? req.files : null;
 
+  // If no images found from multer, then give response and return!
   if (!images || images.length === 0) {
-    apiResponse.error(res, "No Images Found", null, 500);
+    return apiResponse.error(res, "No Images Found", null, 500);
   }
 
+  // Running loop to upload all the images to cloudinary one by one
+  const productImageURL = [];
   try {
-    const productImages = [];
-
     for (const image of images) {
       const publicId = `${image.originalname}-${Date.now()}`;
 
@@ -120,28 +141,59 @@ const addProductImage = asyncHandler(async (req, res) => {
         publicId
       );
 
-      const productImage = await productImageModel.create({
-        url: result.secure_url,
-        product: productId,
-      });
-
-      productImages.push(productImage);
+      productImageURL.push({ url: result?.secure_url, product: productId });
     }
+
+    const uploadedImages = await productImageModel.insertMany(productImageURL);
+
+    apiResponse.success(
+      res,
+      "All Images Uploaded Successfully",
+      uploadedImages,
+      200
+    );
   } catch (err) {
     console.log("Error uploading images to Cloudinary:", err);
-    return apiResponse.error(res, "Failed to upload product images", null, 500);
+    return apiResponse.error(res, "Failed to upload product images", err, 500);
   }
-
-  const productImages = {
-    url,
-    product: productId,
-  };
-
-  apiResponse.success(
-    res,
-    "Product Images Created Successfully",
-    productImages
-  );
 });
 
-export { productUpload, addProductImage, fetchAllProducts };
+// Find a Single product
+const filterProductById = asyncHandler(async (req, res) => {
+  const { productId } = req.params;
+
+  if (!productId)
+    return apiResponse.error(res, "Product Id not found.", null, 500);
+
+  try {
+    const filteredProduct = await productModel.aggregate([
+      {
+        $match: { _id: new mongoose.Types.ObjectId(productId) },
+      },
+      {
+        $lookup: {
+          from: "productimages",
+          localField: "_id",
+          foreignField: "product",
+          as: "imageGallery",
+        },
+      },
+    ]);
+
+    if (!filterProductById) {
+      return apiResponse.error(res, "Product Not Found.", 500);
+    }
+
+    return apiResponse.success(res, "PRODUCT FOUND", filteredProduct, 200);
+  } catch (err) {
+    return apiResponse.error(res, "Product Not Found.", err, 500);
+  }
+});
+
+export {
+  productUpload,
+  addProductImage,
+  fetchAllProducts,
+  deleteProduct,
+  filterProductById,
+};
