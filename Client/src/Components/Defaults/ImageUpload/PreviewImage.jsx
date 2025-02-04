@@ -1,5 +1,3 @@
-import React from "react";
-
 const PreviewImage = () => {
   return (
     <div className={`box ${!isCropDone && "hidden"} w-full`}>

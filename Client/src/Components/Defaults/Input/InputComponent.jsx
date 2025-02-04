@@ -8,6 +8,7 @@ const InputComponent = ({
   onChange,
   register,
   errors,
+  className = "col-span-3",
   type = "text",
 }) => {
   return (
@@ -20,7 +21,7 @@ const InputComponent = ({
         type={type}
         defaultValue={defaultValue}
         onChange={onChange}
-        className="col-span-3"
+        className={className}
         {...register(id, {
           required: { value: true, message: `${label} is required` },
         })}
