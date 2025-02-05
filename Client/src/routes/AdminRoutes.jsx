@@ -22,9 +22,7 @@ const AdminRoutes = () => {
   return (
     <Suspense fallback={<LoaderComponent />}>
       <Routes>
-        <Route path="/" element={<RootLayout />}>
-          <Route path="" element={<AdminDashboard />} />
-        </Route>
+        <Route path="/" element={<AdminDashboard />} />
       </Routes>
     </Suspense>
   );

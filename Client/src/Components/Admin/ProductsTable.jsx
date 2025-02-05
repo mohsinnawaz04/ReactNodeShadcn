@@ -14,13 +14,12 @@ const ProductsTable = () => {
     <div className="mx-1 mt-10 border border-zinc-800 rounded-md">
       <Table>
         <TableHeader>
-          <TableRow className="border-zinc-800">
+          <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Description</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Category</TableHead>
-            <TableHead className="text-right">Created At</TableHead>
-            <TableHead className="text-right w-[50px]"></TableHead>
+            <TableHead className="text-start w-[200px]">Created At</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -29,10 +28,15 @@ const ProductsTable = () => {
             <TableCell>Lorem ipsum dolor sit amet.</TableCell>
             <TableCell>$250.00</TableCell>
             <TableCell>Mobile</TableCell>
-            <TableCell className="text-right">January 31, 2025</TableCell>
-            <TableCell className="text-right">
-              <Button className="bg-transparent -mt-2">...</Button>
-            </TableCell>
+            <TableCell className="text-start">January 31, 2025</TableCell>
+          </TableRow>
+
+          <TableRow>
+            <TableCell className="font-medium">Google Pixel 9XL</TableCell>
+            <TableCell>Lorem ipsum dolor sit amet.</TableCell>
+            <TableCell>$250.00</TableCell>
+            <TableCell>Mobile</TableCell>
+            <TableCell className="text-start">January 31, 2025</TableCell>
           </TableRow>
         </TableBody>
       </Table>
