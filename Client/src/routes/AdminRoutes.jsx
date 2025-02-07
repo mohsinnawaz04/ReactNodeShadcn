@@ -1,8 +1,8 @@
-import RootLayout from "@/Components/Defaults/Layouts/RootLayout";
 import LoaderComponent from "@/Components/Defaults/Loaders/LoaderComponent";
 import { useUser } from "@/lib/Context/UserContext";
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { ProductsProvider } from "@/lib/Context/ProductsContext";
 
 const AdminDashboard = lazy(() => import("@/Components/Admin/AdminDashboard"));
 
@@ -20,11 +20,13 @@ const AdminRoutes = () => {
   }
 
   return (
-    <Suspense fallback={<LoaderComponent />}>
-      <Routes>
-        <Route path="/" element={<AdminDashboard />} />
-      </Routes>
-    </Suspense>
+    <ProductsProvider>
+      <Suspense fallback={<LoaderComponent />}>
+        <Routes>
+          <Route path="/" element={<AdminDashboard />} />
+        </Routes>
+      </Suspense>
+    </ProductsProvider>
   );
 };
 
