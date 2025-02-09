@@ -11,7 +11,7 @@ export default {
       },
       colors: {
         background: "hsl(var(--background))",
-        foreground: "#0a0a0a",
+        foreground: "hsl(var(--foreground))",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -29,19 +29,19 @@ export default {
           foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "hsl(var(--muted-foreground))",
+          foreground: "hsl(var(--muted))",
         },
         green: {
           DEFAULT: "#5DBDAC",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "hsl(var(--accent-foreground))",
+          foreground: "hsl(var(--accent))",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "hsl(var(--destructive-foreground))",
+          foreground: "hsl(var(--destructive))",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

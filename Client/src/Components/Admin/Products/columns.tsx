@@ -84,26 +84,32 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const product = row.original;
 
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="h-8 w-8 p-0 bg-transparent shadow-none hover:shadow-none hover:bg-transparent hover:ring-0 hover:border-none hover:outline-none">
+            <Button className="w-fit h-8 p-0 bg-transparent shadow-none hover:shadow-none hover:bg-transparent hover:ring-0 hover:border-none hover:outline-none focus-visible:outline-none focus-visible:border-none focus-visible:shadow-none focus-visible:ring-0">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="h-4 w-4 hover:cursor-pointer" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment._id)}
             >
               Copy payment ID
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
+            <DropdownMenuItem>Edit product</DropdownMenuItem>
+            <DropdownMenuItem>View product</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                console.log(`Product with id: ${product._id} has been deleted!`)
+              }
+            >
+              Delete product
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
