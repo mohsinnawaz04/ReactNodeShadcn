@@ -1,4 +1,5 @@
-import ProductsTable from "./ProductsTable";
+import TableOfProducts from "./Products/TableOfProducts";
+// import ProductsTable from "./ProductsTable";
 
 const AdminDashboard = () => {
   return (
@@ -6,7 +7,7 @@ const AdminDashboard = () => {
       <h1>Welcome to admin panel</h1>
 
       {/* Products Table */}
-      <ProductsTable />
+      <TableOfProducts />
       {/* Products Table */}
     </div>
   );

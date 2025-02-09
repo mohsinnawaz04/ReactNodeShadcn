@@ -37,7 +37,8 @@ const ProductsTable = () => {
 
     setTimeout(() => {
       toast({
-        description: "Product has been Successfully Deleted.",
+        title: "Success",
+        description: "Product has been Deleted.",
         duration: 3000,
       });
 
@@ -66,7 +67,7 @@ const ProductsTable = () => {
               <TableCell>${product.price}</TableCell>
               <TableCell>{product.category}</TableCell>
               <TableCell className="text-start">
-                {new Date(product.updatedAt).toLocaleDateString()}  
+                {new Date(product.updatedAt).toLocaleDateString()}
               </TableCell>
               <TableCell className="text-center">
                 <Button
