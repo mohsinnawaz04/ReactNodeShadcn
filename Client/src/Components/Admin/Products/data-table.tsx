@@ -11,6 +11,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import {
   ColumnDef,
@@ -48,6 +55,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [pageSize, setPageSize] = React.useState(10); // Default rows per page
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
@@ -190,6 +198,26 @@ export function DataTable<TData, TValue>({
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
         <div className="flex items-center justify-end space-x-2">
+          <div className="flex items-center justify-between">
+            <Select
+              onValueChange={(value) => {
+                const newSize = Number(value);
+                setPageSize(newSize);
+                table.setPageSize(newSize);
+              }}
+            >
+              <SelectTrigger className="w-[120px] h-[32px] text-[13px]">
+                <SelectValue placeholder="Rows" />
+              </SelectTrigger>
+              <SelectContent>
+                {[5, 10, 20, 30, 40, 50].map((size) => (
+                  <SelectItem key={size} value={size.toString()}>
+                    {size} rows
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <Button
             size="sm"
             className="border"
