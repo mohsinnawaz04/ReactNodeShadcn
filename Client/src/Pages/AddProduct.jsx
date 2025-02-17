@@ -5,6 +5,7 @@ import { Upload } from "lucide-react";
 import { Select } from "../Components/ui/select";
 import { SelectCategory } from "../Components/Admin/Products/SelectCategory";
 import { Textarea } from "../Components/ui/textarea";
+import ShowImagePreview from "../Components/Admin/Products/ShowImagePreview";
 
 const AddProduct = () => {
   return (
@@ -24,13 +25,7 @@ const AddProduct = () => {
 
           <div className="mt-2 p-3 space-y-2">
             <h6 className="sub-heading text-sm">Product Image</h6>
-            <div className="img-wrapper border min-h-[250px] rounded-md">
-              <img src="images/iphone.png" alt="Glasses Image" />
-            </div>
-
-            <Button className="hover:bg-zinc-700/40 active:bg-zinc-700/20">
-              <Upload /> Add Another Image
-            </Button>
+            <ShowImagePreview />
           </div>
         </div>
 
@@ -60,7 +55,7 @@ const AddProduct = () => {
             <h6 className="sub-heading text-sm">Product Description</h6>
             <Textarea placeholder="Slim fit ready to wear jeans." rows="7" />
           </div>
-          <Button className="mx-3 mt-2">Add Product</Button>
+          <Button className="m-3">Add Product</Button>
         </div>
       </div>
     </div>

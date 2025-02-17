@@ -20,7 +20,6 @@ const getBreadcrumbLabel = (segment) => {
 
 export function AdminBreadcrumb() {
   const location = useLocation();
-  console.log(location);
 
   const pathSegments = location.pathname
     .split("/")
