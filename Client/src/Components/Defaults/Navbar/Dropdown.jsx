@@ -85,12 +85,14 @@ const Dropdown = () => {
             </span>
             Notifications
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer">
-            <span>
-              <ShoppingCart size={17} strokeWidth={2} />
-            </span>
-            Cart
-          </DropdownMenuItem>
+          <Link to={"/cart"}>
+            <DropdownMenuItem className="cursor-pointer">
+              <span>
+                <ShoppingCart size={17} strokeWidth={2} />
+              </span>
+              Cart
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem className="cursor-pointer">
             <span>
               <CreditCard size={17} strokeWidth={2} />

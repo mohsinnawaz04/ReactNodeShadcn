@@ -40,7 +40,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
-import { Columns3 } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  Columns3,
+} from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -197,7 +203,7 @@ export function DataTable<TData, TValue>({
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="flex items-center justify-end space-x-2">
+        <div className="flex items-center justify-end space-x-10">
           <div className="flex items-center justify-between">
             <Select
               onValueChange={(value) => {
@@ -218,7 +224,11 @@ export function DataTable<TData, TValue>({
               </SelectContent>
             </Select>
           </div>
-          <Button
+          <span className="text-sm">
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()}
+          </span>
+          {/* <Button
             size="sm"
             className="border"
             onClick={() => table.previousPage()}
@@ -226,6 +236,7 @@ export function DataTable<TData, TValue>({
           >
             Previous
           </Button>
+
           <Button
             size="sm"
             className="border"
@@ -233,7 +244,49 @@ export function DataTable<TData, TValue>({
             disabled={!table.getCanNextPage()}
           >
             Next
-          </Button>
+          </Button> */}
+
+          <div className="flex justify-center items-center space-x-2">
+            {/* First Page */}
+            <Button
+              className="size-7 text-white border border-white/40 p-3 transition-all hover:border-white"
+              size="small"
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <ChevronsLeft className="size-5" />
+            </Button>
+
+            {/* Previous Page */}
+            <Button
+              className="size-7 text-white border border-white/40 p-3 transition-all hover:border-white"
+              size="small"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <ChevronLeft className="size-5" />
+            </Button>
+
+            {/* Next Page */}
+            <Button
+              className="size-7 text-white border border-white/40 p-3 transition-all hover:border-white"
+              size="small"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <ChevronRight className="size-5" />
+            </Button>
+
+            {/* Last Page */}
+            <Button
+              className="size-7 text-white border border-white/40 p-3 transition-all hover:border-white"
+              size="small"
+              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+              disabled={!table.getCanNextPage()}
+            >
+              <ChevronsRight className="size-5" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
