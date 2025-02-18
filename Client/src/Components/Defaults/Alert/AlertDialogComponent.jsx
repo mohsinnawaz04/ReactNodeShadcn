@@ -9,7 +9,7 @@ import {
   AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
 
-const AlertDialogComponent = ({ open, close }) => {
+const AlertDialogComponent = ({ open, onAction }) => {
   return (
     <>
       <AlertDialog open={open}>
@@ -25,13 +25,13 @@ const AlertDialogComponent = ({ open, close }) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel
-              onClick={close}
+              onClick={onAction}
               className="text-foreground hover:bg-foreground hover:text-background"
             >
               Cancel
             </AlertDialogCancel>
             {/* The text "Proceed" has an if statement in dropdown.jsx component. Don't change it before understanding the code */}
-            <AlertDialogAction onClick={close} className="hover:bg-zinc-800">
+            <AlertDialogAction onClick={onAction} className="hover:bg-zinc-800">
               Proceed
             </AlertDialogAction>{" "}
             {/* The text "Proceed" has an if statement in dropdown.jsx component. Don't change it before understanding the code */}

@@ -206,12 +206,25 @@ poster-img.img-wrapper img {
   padding: 0 !important;
 }
 
-/* SIDEBAR */
-/* --sidebar-background: 240 5.9% 10%;
---sidebar-foreground: 240 4.8% 95.9%;
---sidebar-primary: 224.3 76.3% 48%;
---sidebar-primary-foreground: 0 0% 100%;
---sidebar-accent: 240 3.7% 15.9%;
---sidebar-accent-foreground: 240 4.8% 95.9%;
---sidebar-border: 240 3.7% 15.9%;
---sidebar-ring: 217.2 91.2% 59.8%; */
+.product__swiper .swiper-button-prev,
+.product__swiper .swiper-button-next {
+  background: #161616;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

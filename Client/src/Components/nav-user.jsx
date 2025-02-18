@@ -1,11 +1,4 @@
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
+import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -23,9 +16,22 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import AlertDialogComponent from "./Defaults/Alert/AlertDialogComponent";
+import { useState } from "react";
 
-export function NavUser({ user }) {
+export function NavUser({ user, logout }) {
   const { isMobile } = useSidebar();
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpenChange = (e) => {
+    setOpen((prev) => !prev);
+
+    // This Proceed comes from AlertDialogComponet.jsx's AlertDialogAction Component text.
+    if (e.target.innerHTML === "Proceed") {
+      logout();
+    }
+  };
 
   return (
     <SidebarMenu>
@@ -65,35 +71,33 @@ export function NavUser({ user }) {
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
+
               <DropdownMenuItem>
                 <Bell />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
-              Log out
-            </DropdownMenuItem>
+            <div onClick={() => handleOpenChange()}>
+              <DropdownMenuItem>
+                <LogOut />
+                Log out
+              </DropdownMenuItem>
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
+        <AlertDialogComponent
+          open={open}
+          close={() => setOpen(false)}
+          onAction={handleOpenChange}
+        />
       </SidebarMenuItem>
     </SidebarMenu>
   );

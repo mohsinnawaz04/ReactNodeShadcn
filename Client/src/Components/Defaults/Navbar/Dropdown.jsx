@@ -27,7 +27,7 @@ const Dropdown = () => {
     console.log(e);
     setOpen((prev) => !prev);
 
-    // This Proceed comes from AlertDialogComponet.jsx AlertDialogAction Component text.
+    // This Proceed comes from AlertDialogComponet.jsx's AlertDialogAction Component text.
     if (e.target.innerHTML === "Proceed") {
       logout();
     }
@@ -121,7 +121,11 @@ const Dropdown = () => {
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-      <AlertDialogComponent open={open} close={handleOpenChange} />
+      <AlertDialogComponent
+        open={open}
+        close={() => setOpen(false)}
+        onAction={handleOpenChange}
+      />
     </>
   );
 };

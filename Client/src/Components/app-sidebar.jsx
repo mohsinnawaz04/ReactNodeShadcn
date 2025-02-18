@@ -1,19 +1,13 @@
 import * as React from "react";
 import {
-  AudioWaveform,
   BookOpen,
   Bot,
-  Command,
-  Frame,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
   Settings2,
   SquareTerminal,
 } from "lucide-react";
 
 import { NavMain } from "@/Components/nav-main";
-import { NavProjects } from "@/Components/nav-projects";
 import { NavUser } from "@/Components/nav-user";
 import { TeamSwitcher } from "@/Components/team-switcher";
 import {
@@ -23,6 +17,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/Components/ui/sidebar";
+import { useUser } from "../lib/Context/UserContext";
 
 // This is sample data.
 const data = {
@@ -128,6 +123,18 @@ const data = {
 };
 
 export function AppSidebar({ ...props }) {
+  const { currentUser, logout } = useUser();
+
+  const userName = `${currentUser.fName} ${currentUser.lName}`;
+  const email = currentUser.email;
+  const avatar = currentUser.profilePic;
+
+  const user = {
+    name: userName,
+    email,
+    avatar,
+  };
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -137,7 +144,7 @@ export function AppSidebar({ ...props }) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} logout={logout} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
