@@ -103,6 +103,12 @@
 .swiper {
   padding: 3rem 0 !important;
 }
+
+.swiper-slide img::selection {
+  user-select: none !important;
+  outline: none !important;
+  background-color: none !important;
+}
 .swiper-pagination-bullet {
   width: 6px !important;
   height: 6px !important;

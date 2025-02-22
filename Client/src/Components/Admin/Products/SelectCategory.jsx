@@ -8,22 +8,30 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function SelectCategory() {
+export function SelectCategory({ Controller, control }) {
   return (
-    <Select>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder="Select a Category" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Category</SelectLabel>
-          <SelectItem value="apple">Clothes</SelectItem>
-          <SelectItem value="banana">Shoes</SelectItem>
-          <SelectItem value="blueberry">Jackets</SelectItem>
-          <SelectItem value="grapes">UnderGarments</SelectItem>
-          <SelectItem value="pineapple">Chains</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <Controller
+      name="category"
+      control={control}
+      defaultValue=""
+      rules={{ required: "Category is required" }} // Validation rule
+      render={({ field }) => (
+        <Select value={field.value} onValueChange={field.onChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select a Category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Category</SelectLabel>
+              <SelectItem value="clothes">Clothes</SelectItem>
+              <SelectItem value="shoes">Shoes</SelectItem>
+              <SelectItem value="jackets">Jackets</SelectItem>
+              <SelectItem value="undergarments">UnderGarments</SelectItem>
+              <SelectItem value="chains">Chains</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      )}
+    />
   );
 }

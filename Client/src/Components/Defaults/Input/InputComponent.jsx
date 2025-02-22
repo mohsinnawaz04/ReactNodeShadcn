@@ -20,7 +20,7 @@ const InputComponent = ({
         id={id}
         type={type}
         defaultValue={defaultValue}
-        onChange={onChange}
+        onChange={onChange && onChange}
         className={className}
         {...register(id, {
           required: { value: true, message: `${label} is required` },

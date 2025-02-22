@@ -18,7 +18,7 @@ export function UserProvider({ children }) {
 
   async function login(userDetails) {
     const { email, password } = userDetails;
-    console.log("EMAIL", email, "Password", password);
+    console.log("Email attempt:", email);
 
     // Check for empty fields
     if (email.trim() === "" || password.trim() === "") {
@@ -31,23 +31,26 @@ export function UserProvider({ children }) {
         withCredentials: true,
       }); //Ensure Cookies are sent/received
 
-      if (data) {
+      if (data?.data) {
         const token = data.data;
-        console.log("TOKEN", token);
+        console.log("token =>: ", token);
 
-        if (token) {
-          storeTokenLS(token);
-          init(token);
-        }
+        storeTokenLS(token);
+        init(token);
+        return;
       }
     } catch (err) {
-      console.log("Error parsing fields to backend", err);
-      console.log("ERROR MESSAGE: ", err.response.data.message);
-      setTimeout(() => {
+      if (err.response && err.response.data && err.response.data.message) {
+        console.log("ERROR MESSAGE: ", err.response.data.message);
         return toast({
           title: `${err.response.data.message}`,
         });
-      }, 1000);
+      } else {
+        console.log("An unexpected error occurred:", err.message);
+        return toast({
+          title: "An error occurred while trying to log in",
+        });
+      }
     }
   }
 

@@ -1,14 +1,10 @@
-import { useState } from "react";
-import { Button } from "../../ui/button";
-import { Upload } from "lucide-react";
-import { FileUploader } from "react-drag-drop-files";
 import DragDrop from "../../../hooks/dragDrop";
 
-const ShowImagePreview = () => {
+const ShowImagePreview = ({ Controller, control, name }) => {
   return (
     <>
       {/* <Button>Select or drop Images</Button> */}
-      <DragDrop />
+      <DragDrop Controller={Controller} control={control} name={"images"} />
     </>
   );
 };
