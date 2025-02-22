@@ -4,15 +4,13 @@ import { Button } from "../Components/ui/button";
 import { SelectCategory } from "../Components/Admin/Products/SelectCategory";
 import { Textarea } from "../Components/ui/textarea";
 import ShowImagePreview from "../Components/Admin/Products/ShowImagePreview";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import InputComponent from "../Components/Defaults/Input/InputComponent";
-import SelectTag from "../Components/Admin/SelectTag";
+
 import { Package } from "lucide-react";
+import { instance } from "../lib/axios";
 
 const AddProduct = () => {
-  const [showInputError, setShowInputError] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -27,8 +25,44 @@ const AddProduct = () => {
 
   function onSubmit(data) {
     console.log(data);
-    
+
+    postProductData(data);
   }
+
+  const postProductData = async (data) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("category", data.category);
+      formData.append("name", data.name);
+      formData.append("price", data.price);
+      formData.append("description", data.description);
+
+      // Handle images: featuredImage (1st) and galleryImages (rest, max 4)
+      if (data.images && data.images.length > 0) {
+        formData.append("featuredImage", data.images[0]);
+
+        if (data.images.length > 1) {
+          const galleryImages = data.images.slice(1, 5); // Works for any length
+          galleryImages.forEach((image) => {
+            formData.append("galleryImages", image);
+          });
+        }
+      }
+
+      const response = await instance.post("/products/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Optional, Axios sets this automatically with FormData
+        },
+      });
+      console.log("Response", response);
+    } catch (err) {
+      console.error(
+        "Error while adding product to database:",
+        err.response ? err.response.data : err.message
+      );
+    }
+  };
 
   return (
     <form id="addProductForm" onSubmit={handleSubmit(onSubmit)} className="p-4">

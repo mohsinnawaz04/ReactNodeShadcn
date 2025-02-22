@@ -53,7 +53,7 @@ const productUpload = asyncHandler(async (req, res) => {
       // await product.save();
     }
 
-    if (galleryImages.length > 0) {
+    if (galleryImages?.length > 0) {
       const uploadPromises = galleryImages.map(async (image) => {
         const formattedDate = formatTimestampForWhatsApp(Date.now());
         const publicId = `${image.originalname}-${formattedDate}`;
